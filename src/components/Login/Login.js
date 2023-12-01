@@ -11,14 +11,25 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
+        axios.post('http://localhost:5000/login', { username, password })
+            .then(function (response) {
+                console.log(response.data);
+                if (response.data === "Success") {
+                    navigate("/users");
+                } else {
+                    alert("Invalid Credentials");
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     }
 
 
     return (
         <div className='signup'>
             <div className="container">
-                <h1 className='heading' style={{ fontSize: "2.5rem"}}>Login</h1>
+                <h1 className='heading' style={{ fontSize: "2.5rem" }}>Login</h1>
                 <form onSubmit={handleSubmit}>
 
                     <div className="row">

@@ -17,6 +17,27 @@ app.post('/register', (req, res) => {
     .catch( err => res.json(err))
 })
 
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+    UserModel.findOne({ username: username})
+    .then(user => {
+        if(user) {
+            if(user.password === password) {
+                res.json("Success")
+            } else {
+                res.json("Incorrect password")
+            }
+        } else {
+            res.json("Invalid Credentials")
+        }
+    })
+});
+
+app.get('/users', (req, res) => {
+    UserModel.find()
+    .then((users) => res.send(users))
+    .catch((error) => res.json(error))
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running ${PORT}`)
