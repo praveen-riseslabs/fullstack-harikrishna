@@ -19,11 +19,12 @@ const Signup = () => {
     e.preventDefault()
     axios.post('http://localhost:5000/register', { fullname, username, email, phNo, password } )
       .then(function (response) {
-        console.log(response.data);
+        // console.log(response.data);
         navigate("/login");
       })
       .catch(function (error) {
         console.log(error);
+        alert("Invalid Credentials")
       })
   }
 
