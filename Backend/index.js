@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const UserModel = require('./models/users')
 const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcrypt');
 
 const app = express()
 app.use(express.json())
@@ -26,22 +27,30 @@ app.post('/register', [
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
+
+    const salt = bcrypt.genSaltSync(10);
+    secPass = bcrypt.hashSync(req.body.password, salt)
+
     UserModel.create({
         fullname: req.body.fullname,
         username: req.body.username,
         email: req.body.email,
         phNo: req.body.phNo,
-        password: req.body.password
+        password: secPass
     }).then(users => res.json(users))
         .catch(err => res.json({err: "Invalid Credentials"}))
 })
 
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-    UserModel.findOne({ username: username })
+app.post('/login', [
+    body('email', 'Enter a valid Email').isEmail(),
+    body('password', 'Password cannot be blank').exists()
+], (req, res) => {
+    const { email, password } = req.body;
+    UserModel.findOne({ email: email })
         .then(user => {
             if (user) {
-                if (user.password === password) {
+                // if (user.password === password) {
+                if (bcrypt.compare(password, user.password)) {
                     res.json("Success")
                 } else {
                     res.json("Incorrect password")

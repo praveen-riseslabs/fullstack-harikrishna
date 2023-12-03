@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom"
 
 const Login = () => {
 
-    const [username, setUsername] = useState()
+    const [email, setEmail] = useState()
     const [password, setPassword] = useState()
 
     let navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        axios.post('http://localhost:5000/login', { username, password })
+        axios.post('http://localhost:5000/login', { email, password })
             .then(function (response) {
                 console.log(response.data);
                 if (response.data === "Success") {
@@ -36,7 +36,7 @@ const Login = () => {
                         <div className="col">
                             <div className="mb-3">
                                 <label htmlFor="username" className="form-label">Username</label>
-                                <input type="text" className="form-control" id="username" name="username" aria-describedby="emailHelp" onChange={(e) => setUsername(e.target.value)} />
+                                <input type="text" className="form-control" id="email" name="email" aria-describedby="emailHelp" onChange={(e) => setEmail(e.target.value)} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="username" className="form-label">Password</label>
