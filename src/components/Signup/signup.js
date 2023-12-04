@@ -12,12 +12,13 @@ const Signup = () => {
   const [password, setPassword] = useState()
   // eslint-disable-next-line
   const [cpassword, setCPassword] = useState()
+  const [gender, setGender] = useState()
 
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    axios.post('http://localhost:5000/register', { fullname, username, email, phNo, password } )
+    axios.post('http://localhost:5000/register', { fullname, username, email, phNo, password, gender } )
       .then(function (response) {
         // console.log(response.data);
         navigate("/login");
@@ -83,15 +84,15 @@ const Signup = () => {
             <label htmlFor="gender" className="form-label mt-2">Gender</label>
             <div className="col">
               <div className="form-check form-check-inline">
-                <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
+                <input className="form-check-input" type="radio" name="gender" id="gender" value="Male" onChange={e => setGender(e.target.value)} />
                 <label className="form-check-label" htmlFor="inlineRadio1">Male</label>
               </div>
               <div className="form-check form-check-inline mx-3">
-                <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
+                <input className="form-check-input" type="radio" name="gender" id="gender" value="Female" onChange={e => setGender(e.target.value)} />
                 <label className="form-check-label" htmlFor="inlineRadio2">Female</label>
               </div>
               <div className="form-check form-check-inline mx-3">
-                <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" />
+                <input className="form-check-input" type="radio" name="gender" id="gender" value="Prefer Not to say" onChange={e => setGender(e.target.value)} />
                 <label className="form-check-label" htmlFor="inlineRadio3">Prefer Not to say</label>
               </div>
             </div>

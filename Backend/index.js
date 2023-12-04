@@ -18,7 +18,8 @@ app.post('/register', [
     body('username', 'Enter a valid Username').isLength({ min: 3 }),
     body('email', 'Invalid Email').isEmail(),
     body('phNo', 'Invalid Phone Number').isLength({ min: 10 }),
-    body('password', 'Password must atleast of 5 characters').isLength({ min: 5 })
+    body('password', 'Password must atleast of 5 characters').isLength({ min: 5 }),
+    body('gender', 'Choose an Option').exists()
 ], (req, res) => {
     // UserModel.create(req.body)
     // .then(users => res.json(users))
@@ -36,7 +37,8 @@ app.post('/register', [
         username: req.body.username,
         email: req.body.email,
         phNo: req.body.phNo,
-        password: secPass
+        password: secPass,
+        gender: req.body.gender
     }).then(users => res.json(users))
         .catch(err => res.json({err: "Invalid Credentials"}))
 })
