@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var fetchuser = require('./middleware/fetchuser');
 const bodyParser = require('body-parser');
+const nodemailer = require("nodemailer");
 
 
 const JWT_SECRET = 'SecretStr!ng'
@@ -121,7 +122,29 @@ app.post("/forgot-password", async (req, res) => {
         }
         const token = jwt.sign({ email: user.email, id: user._id }, JWT_SECRET, { expiresIn: "5m" });
         const link = `http://localhost:5000/reset-password/${user._id}/${token}`
-        console.log(link);
+
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'harikrishnankhd09@gmail.com',
+                pass: 'nyvi nwya xwja abma'
+            }
+        });
+
+        var mailOptions = {
+            from: 'tester@gmail.com',
+            to: 'Harikrishnankhd09@gmail.com',
+            subject: 'Password Reset Link',
+            text: link
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
     } catch (error) { }
 });
 
@@ -157,18 +180,18 @@ app.post("/reset-password/:id/:token", async (req, res) => {
 
         await UserModel.updateOne(
             {
-              _id: id,
+                _id: id,
             },
             {
-              $set: {
-                password: secPass,
-              },
+                $set: {
+                    password: secPass,
+                },
             }
-          );
-        res.json({ status : "Password Updated Successfully"});
+        );
+        res.json({ status: "Password Updated Successfully" });
     } catch (error) {
         console.log(error);
-        res.json({ status : "Something Went Wrong"});
+        res.json({ status: "Something Went Wrong" });
     }
 });
 
