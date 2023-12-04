@@ -16,9 +16,19 @@ const Dashboard = () => {
     }, [])
 
     return (
-        <div>
-            <h1 className='text-center mt-4' style={{ fontWeight: "700", marginBottom: "25px" }}>Users</h1>
-            {
+        <div className='signup' style={{ height: "100vh" }}>
+            <div className="container">
+                <h1 className='heading' style={{ fontSize: "2.5rem" }}>Dashboard</h1>
+
+                <div className="">
+                    <p className="text">Fullname: </p>
+                    <p className="text">Email: </p>
+                    <p className="text">Phone: </p>
+                </div>
+
+                <button type="submit" className="btn">Logout</button>
+            </div>
+            {/* {
                 users.map((user, _id) => {
                     return <div style={{ padding: "15px 350px" }} key={_id}>
                         <div className="card text-center">
@@ -33,7 +43,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                 })
-            }
+            } */}
         </div>
     )
 }
