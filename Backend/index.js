@@ -91,7 +91,7 @@ app.post('/login', [
             }
         }
         const authToken = jwt.sign(data, JWT_SECRET);
-        res.json({ authToken })
+        res.send({ authToken })
         // console.log(authToken)
     } catch (error) {
         console.error(error.message);
@@ -99,18 +99,21 @@ app.post('/login', [
     }
 });
 
-app.post('/dashboard', fetchuser, async (req, res) => {
+app.post('/dashboard', (req, res) => {
+    const { token } = req.body;
     try {
-        userId = req.user.id
-        const user = await UserModel.findById(userId).select("-password")
-        res.send(user)
+        const user = jwt.verify(token, JWT_SECRET)
+        const id = user.id;
+        UserModel.findOne({ id: id })
+        .then((data) => {
+            res.send({ status: "OK", data: data })
+        })
+        .catch((error) => {
+            res.send({ status: "Error", data: error })
+        })
     } catch (error) {
-        console.error(error.message);
-        res.status(500).json({ error: 'Server error' });
+        console.log(error)
     }
-    // UserModel.find()
-    //     .then((users) => res.send(users))
-    //     .catch((error) => res.json(error))
 });
 
 app.post("/forgot-password", async (req, res) => {

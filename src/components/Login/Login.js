@@ -9,21 +9,6 @@ const Login = () => {
 
     let navigate = useNavigate();
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault()
-    //     axios.post('http://localhost:5000/login', { email, password })
-    //         .then(function (response) {
-    //             console.log(response.data);
-    //             if (response.data === "Success") {
-    //                 navigate("/dashboard");
-    //             } else {
-    //                 alert("Invalid Credentials");
-    //             }
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         })
-    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault()

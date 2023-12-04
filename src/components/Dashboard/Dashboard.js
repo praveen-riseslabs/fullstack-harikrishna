@@ -1,49 +1,69 @@
-import axios from 'axios'
+// import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 const Dashboard = () => {
 
-    const [users, setUsers] = useState([])
+    const [user, setUser] = useState("");
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await axios.post('http://localhost:5000/dashboard', {
+    //                 token: localStorage.getItem('token'),
+    //             });
+    //             const data = await response.data;
+    //             console.log(data)
+    //             setUser(data);
+
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+    //     };
+    //     fetchData();
+    // }, []);
+
+    // useEffect(() => {
+    //     console.log(user);
+    // }, [user]);
+
 
     useEffect(() => {
-        axios.get('http://localhost:5000/dashboard')
-            .then((users) => {
-                localStorage.getItem('token')
-                setUsers(users.data)
-                console.log(users)
-            })
-            .catch((error) => console.log(error))
-    }, [])
+        fetch("http://localhost:5000/dashboard", {
+            method: "POST",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+                token: localStorage.getItem("token"),
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data, "userData");
+                setUser(data.data);
+                console.log(user)
+            });
+    }, []);
+
+
+
 
     return (
-        <div className='signup' style={{ height: "100vh" }}>
+        <div className='signup' style={{ height: "100%" }}>
             <div className="container">
                 <h1 className='heading' style={{ fontSize: "2.5rem" }}>Dashboard</h1>
 
                 <div className="">
-                    <p className="text">Fullname: </p>
-                    <p className="text">Email: </p>
-                    <p className="text">Phone: </p>
+                    <p className="text" style={{ fontSize: "18px", fontWeight: "500" }}>Fullname : <span style={{ fontWeight: "400" }}>{user.fullname}</span></p>
+                    <p className="text" style={{ fontSize: "18px", fontWeight: "500" }}>Email : <span style={{ fontWeight: "400" }}>{user.email}</span></p>
+                    <p className="text" style={{ fontSize: "18px", fontWeight: "500" }}>Phone : <span style={{ fontWeight: "400" }}>{user.phNo}</span></p>
                 </div>
 
                 <button type="submit" className="btn">Logout</button>
             </div>
-            {/* {
-                users.map((user, _id) => {
-                    return <div style={{ padding: "15px 350px" }} key={_id}>
-                        <div className="card text-center">
-                            <div className="card-header">
-                                <h5>{user.username}</h5>
-                            </div>
-                            <div className="card-body">
-                                <p className="card-text">Fullname: {user.fullname}</p>
-                                <p className="card-text">Email: {user.email}</p>
-                                <p className="card-text">Phone: {user.phNo}</p>
-                            </div>
-                        </div>
-                    </div>
-                })
-            } */}
         </div>
     )
 }
