@@ -7,7 +7,7 @@ import {
   Route
 } from "react-router-dom";
 import Login from './components/Login/Login';
-import Users from './components/Users/Users';
+import Dashboard from './components/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
           <Route exact path="/" element={<Home />}></Route>
           <Route exact path="/register" element={<Signup />}></Route>
           <Route exact path="/login" element={<Login/>}></Route>
-          <Route exact path="/users" element={<Users/>}></Route>
+          <Route exact path="/dashboard" element={<Dashboard/>}></Route>
         </Routes>
       </Router>
     </div>

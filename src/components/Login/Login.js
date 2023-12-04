@@ -9,21 +9,38 @@ const Login = () => {
 
     let navigate = useNavigate();
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault()
+    //     axios.post('http://localhost:5000/login', { email, password })
+    //         .then(function (response) {
+    //             console.log(response.data);
+    //             if (response.data === "Success") {
+    //                 navigate("/dashboard");
+    //             } else {
+    //                 alert("Invalid Credentials");
+    //             }
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         })
+    // }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
-        axios.post('http://localhost:5000/login', { email, password })
-            .then(function (response) {
-                console.log(response.data);
-                if (response.data === "Success") {
-                    navigate("/users");
-                } else {
-                    alert("Invalid Credentials");
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-    }
+        try {
+          const response = await axios.post('http://localhost:5000/login', { email, password });
+          const { data } = response;
+          if (data) {
+            localStorage.setItem('token', data.authToken)
+            navigate("/dashboard");
+            alert("Logged in Successfully")
+          } else {
+            alert("Invalid Login Credentials!")
+          }
+        } catch (error) {
+          console.error("Error during registration:", error);
+        }
+      }
 
 
     return (
@@ -35,7 +52,7 @@ const Login = () => {
                     <div className="row">
                         <div className="col">
                             <div className="mb-3">
-                                <label htmlFor="username" className="form-label">Username</label>
+                                <label htmlFor="username" className="form-label">Email</label>
                                 <input type="text" className="form-control" id="email" name="email" aria-describedby="emailHelp" onChange={(e) => setEmail(e.target.value)} />
                             </div>
                             <div className="mb-3">

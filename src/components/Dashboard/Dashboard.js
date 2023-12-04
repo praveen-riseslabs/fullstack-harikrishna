@@ -1,15 +1,20 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-const Users = () => {
+const Dashboard = () => {
 
     const [users, setUsers] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:5000/users')
-            .then((users) => setUsers(users.data))
+        axios.get('http://localhost:5000/dashboard')
+            .then((users) => {
+                localStorage.getItem('token')
+                setUsers(users.data)
+                console.log(users)
+            })
             .catch((error) => console.log(error))
     }, [])
+
     return (
         <div>
             <h1 className='text-center mt-4' style={{ fontWeight: "700", marginBottom: "25px" }}>Users</h1>
@@ -33,4 +38,4 @@ const Users = () => {
     )
 }
 
-export default Users
+export default Dashboard

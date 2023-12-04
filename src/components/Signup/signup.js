@@ -18,15 +18,19 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    axios.post('http://localhost:5000/register', { fullname, username, email, phNo, password, gender } )
-      .then(function (response) {
-        // console.log(response.data);
+    try {
+      const response = await axios.post('http://localhost:5000/register', { fullname, username, email, phNo, password, gender });
+      const { data } = response;
+      if (data) {
+        localStorage.setItem('token', data.authToken)
         navigate("/login");
-      })
-      .catch(function (error) {
-        console.log(error);
-        alert("Invalid Credentials")
-      })
+        alert("Account Created Successfully")
+      } else {
+        alert("Invalid Credentials!")
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+    }
   }
 
   return (
