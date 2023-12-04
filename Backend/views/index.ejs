@@ -1,18 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Reset Password</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            background: linear-gradient(135deg, #5cd6ff, #800080);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            width: 650px;
+            height: 600px;
+        }
+
+        .center h2 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 35px;
+        }
+
+        .center form {
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+
+        form .textField {
+            width: 500px;
+            margin-bottom: 30px;
+            height: 40px;
+            padding: 10px;
+        }
+
+        .form-label {
+            font-weight: 500;
+        }
+
+        .btn {
+            color: white;
+            font-weight: 500;
+            background: linear-gradient(135deg, #5cd6ff, #c437c4);
+            width: 500px;
+            margin-top: 25px;
+            border: none;
+        }
+    </style>
 </head>
+
 <body>
-    <p>Email: <%= email%></p>
-    <form action="" method="POST">
-        <span>New Password</span>
-        <input type="text" name="password" id="password">
-        <span>Confirm Password</span>
-        <input type="text" name="ConfirmPassword" id="ConfirmPassword">
-        <input type="submit" value="submit">
-    </form>
+    <div class="center">
+        <h2>Email: <%= email%>
+        </h2>
+        <form action="" method="POST">
+            <div className="row">
+                <div className="col">
+                    <div className="mb-3">
+                        <label htmlFor="fullname" className="form-label">New Password</label>
+                    </div>
+                    <input class="textField" type="text" name="password" id="password">
+                </div>
+                <div className="col">
+                    <div className="mb-3">
+                        <label htmlFor="fullname" className="form-label">Confirm Password</label>
+                    </div>
+                    <input class="textField" type="text" name="ConfirmPassword" id="ConfirmPassword">
+                </div>
+            </div>
+            <input class="btn" type="submit" value="submit">
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
 </body>
+
 </html>
