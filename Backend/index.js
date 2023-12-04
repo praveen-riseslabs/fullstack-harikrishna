@@ -16,6 +16,9 @@ app.use(express.json())
 app.use(cors())
 app.use(bodyParser.json());
 
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: true }));
+
 const PORT = 5000
 
 mongoose.connect("mongodb://127.0.0.1:27017/Registration")
@@ -87,7 +90,7 @@ app.post('/login', [
             }
         }
         const authToken = jwt.sign(data, JWT_SECRET);
-        res.json({authToken})
+        res.json({ authToken })
         // console.log(authToken)
     } catch (error) {
         console.error(error.message);
@@ -108,6 +111,67 @@ app.post('/dashboard', fetchuser, async (req, res) => {
     //     .then((users) => res.send(users))
     //     .catch((error) => res.json(error))
 });
+
+app.post("/forgot-password", async (req, res) => {
+    const { email } = req.body;
+    try {
+        const user = await UserModel.findOne({ email });
+        if (!user) {
+            return res.json({ status: "User does not exist" });
+        }
+        const token = jwt.sign({ email: user.email, id: user._id }, JWT_SECRET, { expiresIn: "5m" });
+        const link = `http://localhost:5000/reset-password/${user._id}/${token}`
+        console.log(link);
+    } catch (error) { }
+});
+
+app.get("/reset-password/:id/:token", async (req, res) => {
+    const { id, token } = req.params;
+    console.log(req.params);
+    const user = await UserModel.findOne({ _id: id });
+    if (!user) {
+        return res.json({ status: "User does not exist" });
+    }
+    try {
+        const verify = jwt.verify(token, JWT_SECRET);
+        res.render("index", { email: verify.email });
+    } catch (error) {
+        console.log(error);
+        res.send("Not Verified");
+    }
+});
+
+app.post("/reset-password/:id/:token", async (req, res) => {
+    const { id, token } = req.params;
+    const { password } = req.body
+    const user = await UserModel.findOne({ _id: id });
+    if (!user) {
+        return res.json({ status: "User does not exist" });
+    }
+    try {
+
+        const verify = jwt.verify(token, JWT_SECRET);
+
+        const salt = await bcrypt.genSaltSync(10);
+        secPass = await bcrypt.hashSync(req.body.password, salt)
+
+        await UserModel.updateOne(
+            {
+              _id: id,
+            },
+            {
+              $set: {
+                password: secPass,
+              },
+            }
+          );
+        res.json({ status : "Password Updated Successfully"});
+    } catch (error) {
+        console.log(error);
+        res.json({ status : "Something Went Wrong"});
+    }
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server is running ${PORT}`)
