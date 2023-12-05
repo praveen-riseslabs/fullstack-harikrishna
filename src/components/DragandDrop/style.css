@@ -1,0 +1,49 @@
+.cont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    height: 92vh;
+    width: 70vw;
+    overflow: hidden;
+}
+
+.cont2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    height: 90vh;
+    width: 30vw;
+}
+
+button {
+    height: 50px;
+    width: 350px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.btn-first {
+    background-color: blue;
+}
+
+.btn-second {
+    background-color: lightblue;
+}
+
+.btn-third {
+    background-color: green;
+}
+
+.btn-fourth {
+    background-color: red;
+}
+
+.btn-fifth {
+    background-color: yellow;
+}
