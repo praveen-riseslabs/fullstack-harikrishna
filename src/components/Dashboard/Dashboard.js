@@ -1,9 +1,17 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
 
+    let navigate = useNavigate();
+
     const [user, setUser] = useState("");
+
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        navigate("/login")
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,7 +42,7 @@ const Dashboard = () => {
                     <p className="text" style={{ fontSize: "18px", fontWeight: "500" }}>Phone : <span style={{ fontWeight: "400" }}>{user.phNo}</span></p>
                 </div>
 
-                <button type="submit" className="btn">Logout</button>
+                <button type="submit" className="btn" onClick={handleLogout}>Logout</button>
             </div>
         </div>
     )
