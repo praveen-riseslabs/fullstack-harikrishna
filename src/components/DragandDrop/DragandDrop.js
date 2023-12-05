@@ -16,7 +16,6 @@ const DragandDrop = () => {
         setWidgets([...widgets, widgetType])
     }
 
-
     const handleDragOver = (e) => {
         e.preventDefault();
     }
@@ -30,7 +29,7 @@ const DragandDrop = () => {
                         return <div className="dropped-widget" key={index}>
                             <button type="button" className={`btn-${widget.toLowerCase(0)}`}>{widget}</button>
                         </div>
-                    }) }
+                    })}
                 </div>
                 <div className="p-2 cont2">
                     <h1>Buttons</h1>
