@@ -2,9 +2,8 @@ import axios from 'axios'
 import React, { useState } from 'react'
 
 const ResetPassword = () => {
-    const [password, setPassword] = useState()
 
-    // let navigate = useNavigate();
+    const [password, setPassword] = useState()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -27,7 +26,6 @@ const ResetPassword = () => {
             <div className="container">
                 <h1 className='heading' style={{ fontSize: "2.5rem" }}>Reset Password</h1>
                 <form onSubmit={handleSubmit}>
-
                     <div className="row">
                         <div className="col">
                             <div className="mb-3">
@@ -36,11 +34,9 @@ const ResetPassword = () => {
                             </div>
                         </div>
                     </div>
-
                     <div className="row">
                         <button type="submit" className="btn">Login</button>
                     </div>
-
                 </form>
             </div>
         </div>

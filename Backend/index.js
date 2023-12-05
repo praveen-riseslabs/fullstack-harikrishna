@@ -5,7 +5,6 @@ const UserModel = require('./models/users')
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
-var fetchuser = require('./middleware/fetchuser');
 const bodyParser = require('body-parser');
 const nodemailer = require("nodemailer");
 
@@ -56,10 +55,8 @@ app.post('/register', [
         }
         const authToken = jwt.sign(data, JWT_SECRET);
         res.json({ authToken })
-        // console.log(authToken)
     } catch (error) {
         if (error.code === 11000) {
-            // Duplicate key error
             return res.status(400).json({ error: 'Email already exists' });
         }
         console.error(error.message);
@@ -87,7 +84,6 @@ app.post('/login', [
         }
         const authToken = await jwt.sign({ email: user.email }, JWT_SECRET);
         res.json({ token: authToken, email: user.email })
-        // console.log(authToken)
     } catch (error) {
         console.error(error.message);
         res.status(500).json({ error: 'Server error' });
@@ -100,12 +96,12 @@ app.post('/dashboard', (req, res) => {
         const user = jwt.verify(token, JWT_SECRET)
         const email = user.email;
         UserModel.findOne({ email: email }).select("-password")
-        .then((data) => {
-            res.send(data)
-        })
-        .catch((error) => {
-            res.send({ status: "Error", data: error })
-        })
+            .then((data) => {
+                res.send(data)
+            })
+            .catch((error) => {
+                res.send({ status: "Error", data: error })
+            })
     } catch (error) {
         console.log(error)
     }
@@ -120,7 +116,6 @@ app.post("/forgot-password", async (req, res) => {
         }
         const token = jwt.sign({ email: user.email, id: user._id }, JWT_SECRET, { expiresIn: "5m" });
         const link = `http://localhost:5000/reset-password/${user._id}/${token}`
-
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -128,14 +123,12 @@ app.post("/forgot-password", async (req, res) => {
                 pass: 'nyvi nwya xwja abma'
             }
         });
-
         var mailOptions = {
             from: 'tester@gmail.com',
             to: 'Harikrishnankhd09@gmail.com',
             subject: 'Password Reset Link',
             text: link
         };
-
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
@@ -155,7 +148,6 @@ app.get("/reset-password/:id/:token", async (req, res) => {
     }
     try {
         const verify = jwt.verify(token, JWT_SECRET);
-        // res.render("index", { email: verify.email });
         res.render("index", { email: verify.email, status: "Not Verified" });
     } catch (error) {
         console.log(error);
@@ -171,12 +163,9 @@ app.post("/reset-password/:id/:token", async (req, res) => {
         return res.json({ status: "User does not exist" });
     }
     try {
-
         const verify = jwt.verify(token, JWT_SECRET);
-
         const salt = await bcrypt.genSaltSync(10);
         secPass = await bcrypt.hashSync(req.body.password, salt)
-
         await UserModel.updateOne(
             {
                 _id: id,

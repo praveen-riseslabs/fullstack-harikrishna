@@ -38,7 +38,6 @@ const Signup = () => {
       <div className="container">
         <h1 className='heading'>Registration</h1>
         <form onSubmit={handleSubmit}>
-
           <div className="row">
             <div className="col">
               <div className="mb-3">
@@ -53,7 +52,6 @@ const Signup = () => {
               </div>
             </div>
           </div>
-
           <div className="row">
             <div className="col">
               <div className="mb-3">
@@ -68,7 +66,6 @@ const Signup = () => {
               </div>
             </div>
           </div>
-
           <div className="row">
             <div className="col">
               <div className="mb-3">
@@ -83,7 +80,6 @@ const Signup = () => {
               </div>
             </div>
           </div>
-
           <div className="row">
             <label htmlFor="gender" className="form-label mt-2">Gender</label>
             <div className="col">
@@ -101,9 +97,7 @@ const Signup = () => {
               </div>
             </div>
           </div>
-
           <button type="submit" className="btn">Register</button>
-
         </form>
       </div>
     </div>

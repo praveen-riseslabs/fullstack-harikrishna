@@ -1,16 +1,20 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
-    return (
-        <div className='home'>
-            <div className="container">
-                <h1 className='heading'>Sign in to Continue</h1>
-                <Link to='/login'><button type="" className="btn">Login</button></Link>
-                <Link to='/register'><button type="" className="btn">Signup</button></Link>
-            </div>
-        </div>
-    )
+
+    let navigate = useNavigate()
+
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            navigate('/dashboard')
+        } else {
+            navigate("/login")
+        }
+        // eslint-disable-next-line
+    }, []);
+
+    return null;
 }
 
 export default Home

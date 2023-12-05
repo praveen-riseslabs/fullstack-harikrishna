@@ -1,12 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-// import { useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
 
   const [email, setEmail] = useState()
-
-  // let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -29,7 +26,6 @@ const ForgotPassword = () => {
       <div className="container">
         <h1 className='heading' style={{ fontSize: "2.5rem" }}>Reset Password</h1>
         <form onSubmit={handleSubmit}>
-
           <div className="row">
             <div className="col">
               <div className="mb-3">
@@ -38,11 +34,9 @@ const ForgotPassword = () => {
               </div>
             </div>
           </div>
-
           <div className="row">
             <button type="submit" className="btn">Submit</button>
           </div>
-
         </form>
       </div>
     </div>
