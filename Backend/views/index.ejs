@@ -66,7 +66,7 @@
     <div class="center">
         <h2>Email: <%= email%>
         </h2>
-        <form action="" method="POST">
+        <form id="resetPasswordForm" action="" method="POST">
             <div className="row">
                 <div className="col">
                     <div className="mb-3">
@@ -84,6 +84,14 @@
             <input class="btn" type="submit" value="submit">
         </form>
     </div>
+
+    <script>
+        document.getElementById('resetPasswordForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert("Updated Succesfully!")
+            window.location.href = 'http://localhost:3000/login';
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

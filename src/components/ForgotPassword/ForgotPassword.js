@@ -40,7 +40,7 @@ const ForgotPassword = () => {
           </div>
 
           <div className="row">
-            <button type="submit" className="btn">Login</button>
+            <button type="submit" className="btn">Submit</button>
           </div>
 
         </form>

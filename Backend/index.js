@@ -155,7 +155,8 @@ app.get("/reset-password/:id/:token", async (req, res) => {
     }
     try {
         const verify = jwt.verify(token, JWT_SECRET);
-        res.render("index", { email: verify.email });
+        // res.render("index", { email: verify.email });
+        res.render("index", { email: verify.email, status: "Not Verified" });
     } catch (error) {
         console.log(error);
         res.send("Not Verified");
