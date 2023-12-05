@@ -85,13 +85,8 @@ app.post('/login', [
         if (!passwordCompare) {
             return res.status(400).json({ error: 'Invalid Login credentials' });
         }
-        const data = {
-            user: {
-                id: user.id
-            }
-        }
-        const authToken = jwt.sign(data, JWT_SECRET);
-        res.send({ authToken })
+        const authToken = await jwt.sign({ email: user.email }, JWT_SECRET);
+        res.json({ token: authToken, email: user.email })
         // console.log(authToken)
     } catch (error) {
         console.error(error.message);
@@ -103,10 +98,10 @@ app.post('/dashboard', (req, res) => {
     const { token } = req.body;
     try {
         const user = jwt.verify(token, JWT_SECRET)
-        const id = user.id;
-        UserModel.findOne({ id: id })
+        const email = user.email;
+        UserModel.findOne({ email: email }).select("-password")
         .then((data) => {
-            res.send({ status: "OK", data: data })
+            res.send(data)
         })
         .catch((error) => {
             res.send({ status: "Error", data: error })

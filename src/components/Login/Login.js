@@ -16,7 +16,7 @@ const Login = () => {
           const response = await axios.post('http://localhost:5000/login', { email, password });
           const { data } = response;
           if (data) {
-            localStorage.setItem('token', data.authToken)
+            localStorage.setItem('token', data.token)
             navigate("/dashboard");
             alert("Logged in Successfully")
           } else {
