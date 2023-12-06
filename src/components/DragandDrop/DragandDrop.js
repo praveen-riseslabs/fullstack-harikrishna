@@ -30,7 +30,7 @@ const DragandDrop = () => {
                         {widgets.map((widget, index) => {
                             return <div className="" key={index}>
                                 <Draggable>
-                                    <button type="button" className={`btn-${widget.toLowerCase(0)}`}>{widget}</button>
+                                    <button type="button" className={`btn-${widget.toLowerCase(0)} dragItem`}>{widget}</button>
                                 </Draggable>
                             </div>
                         })}
@@ -38,11 +38,11 @@ const DragandDrop = () => {
                 </div>
                 <div className="p-2 cont2">
                     <h1>Buttons</h1>
-                    <button type="button" className="btn-first" draggable onDragStart={(e) => handleOnDrag(e, "First")}>First</button>
-                    <button type="button" className="btn-second" draggable onDragStart={(e) => handleOnDrag(e, "Second")}>Second</button>
-                    <button type="button" className="btn-third" draggable onDragStart={(e) => handleOnDrag(e, "Third")}>Third</button>
-                    <button type="button" className="btn-fourth" draggable onDragStart={(e) => handleOnDrag(e, "Fourth")}>Fourth</button>
-                    <button type="button" className="btn-fifth" draggable onDragStart={(e) => handleOnDrag(e, "Fifth")}>Fifth</button>
+                    <button type="button" className="btn-first dragItem" draggable onDragStart={(e) => handleOnDrag(e, "First")}>First</button>
+                    <button type="button" className="btn-second dragItem" draggable onDragStart={(e) => handleOnDrag(e, "Second")}>Second</button>
+                    <button type="button" className="btn-third dragItem" draggable onDragStart={(e) => handleOnDrag(e, "Third")}>Third</button>
+                    <button type="button" className="btn-fourth dragItem" draggable onDragStart={(e) => handleOnDrag(e, "Fourth")}>Fourth</button>
+                    <button type="button" className="btn-fifth dragItem" draggable onDragStart={(e) => handleOnDrag(e, "Fifth")}>Fifth</button>
                 </div>
             </div>
         </div>

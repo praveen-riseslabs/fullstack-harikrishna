@@ -1,0 +1,98 @@
+.contents {
+    display: flex;
+    overflow: hidden;
+}
+
+.left {
+    color: #858585;
+    background: #282c34;
+    height: 92.5vh;
+    width: 20vw;
+}
+
+.right {
+    color: white;
+    background: #1f2229;
+    height: 92.5vh;
+    width: 80vw;
+    padding: 30px;
+}
+
+.leftItem i {
+    color: #858585;
+    margin-right: 20px;
+}
+
+.leftItem {
+    margin-top: 20px;
+}
+
+.leftItem li {
+    list-style: none;
+}
+
+.item {
+    height: 35px;
+}
+
+.right h1 {
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+.right div {
+    margin: 5px 0;
+}
+
+.first {
+    padding: 10px;
+    background: linear-gradient(135deg, #5cd6ff, #c437c4);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.viewmore a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+}
+
+.second {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cards {
+    width: 270px;
+}
+
+.cards .col-md-4 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cards i {
+    color: white;
+    font-size: 32px;
+    padding: 15px;
+    border-radius: 50%;
+}
+
+.cards h5 {
+    font-size: 16px;
+    color: #858585;
+}
+
+.cards p {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+
+.card {
+    background: #282c34;
+}

@@ -27,7 +27,7 @@
     width: 30vw;
 }
 
-button {
+.dragItem {
     height: 50px;
     width: 350px;
     margin: 10px 0;

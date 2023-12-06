@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import avatar from '../Assets/img/avatar.png'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
 
+    let navigate = useNavigate();
+    //eslint-disable-next-line
     const [user, setUser] = useState("");
 
     useEffect(() => {
@@ -22,6 +24,11 @@ const Navbar = () => {
         fetchData();
     }, []);
 
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        navigate("/login")
+    }
+
 
     return (
         <div>
@@ -37,9 +44,16 @@ const Navbar = () => {
                                 <Link className="nav-link active" aria-current="page" to="/dashboard">Dashboard</Link>
                             </li>
                         </ul>
-                        <div className="d-flex" style={{alignItems: "center"}}>
-                            <img src={avatar} alt="" style={{ height: "30px", width: "30px" }} />
-                            <span className='mx-2'> {user.fullname}</span>
+                        <div className="d-flex" style={{ alignItems: "center" }}>
+                            <div className="dropdown">
+                                <button className="btn-secondary dropdown-toggle" style={{ width: "40px", background: "none", border: "none", marginRight: "30px" }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src={avatar} alt="" style={{ height: "30px", width: "30px" }} />
+                                </button>
+                                <ul className="dropdown-menu" style={{ transform: "translateX(-85px)" }}>
+                                    <li><Link className="dropdown-item" to="/forgot-password">Reset Password</Link></li>
+                                    <li><button type="submit" className="dropdown-item" onClick={handleLogout} style={{ margin: "none" }}>Logout</button></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
