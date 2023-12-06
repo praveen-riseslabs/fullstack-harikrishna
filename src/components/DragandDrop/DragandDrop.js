@@ -1,51 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import Navbar from '../Navbar/Navbar'
 import './style.css'
+import Draggable from 'react-draggable';
 
 const DragandDrop = () => {
-
-    const containerRef = useRef(null);
-    const boxRef = useRef(null);
-    const isClicked = useRef(false);
-    const coords = useRef({
-        startX: 0,
-        startY: 0,
-        lastX: 0,
-        lastY: 0
-    });
-    useEffect(() => {
-        if (!boxRef.current || !containerRef.current) return;
-        const box = boxRef.current;
-        const container = containerRef.current;
-        const onMouseDown = (e) => {
-            isClicked.current = true;
-            coords.current.startX = e.clientX;
-            coords.current.startY = e.clientY;
-        };
-        const onMouseUp = (e) => {
-            isClicked.current = false;
-            coords.current.lastX = box.offsetLeft;
-            coords.current.lastY = box.offsetTop;
-        };
-        const onMouseMove = (e) => {
-            if (!isClicked.current) return;
-            const nextX = e.clientX - coords.current.startX + coords.current.lastX;
-            const nextY = e.clientY - coords.current.startY + coords.current.lastY;
-            box.style.top = `${nextY}px`;
-            box.style.left = `${nextX}px`;
-        };
-        box.addEventListener('mousedown', onMouseDown);
-        box.addEventListener('mouseup', onMouseUp);
-        container.addEventListener('mousemove', onMouseMove);
-        container.addEventListener('mouseleave', onMouseUp);
-        const cleanup = () => {
-            box.removeEventListener('mousedown', onMouseDown);
-            box.removeEventListener('mouseup', onMouseUp);
-            container.removeEventListener('mousemove', onMouseMove);
-            container.removeEventListener('mouseleave', onMouseUp);
-        };
-        return cleanup;
-    }, []);
 
     const [widgets, setWidgets] = useState([]);
 
@@ -67,11 +25,13 @@ const DragandDrop = () => {
         <div>
             <Navbar />
             <div className="flex">
-                <div className="p-2 cont" ref={containerRef} onDrop={handleOnDrop} onDragOver={handleDragOver}>
-                    <div ref={boxRef} className="dropped-widget">
+                <div className="p-2 cont" onDrop={handleOnDrop} onDragOver={handleDragOver}>
+                    <div className="dropped-widget">
                         {widgets.map((widget, index) => {
                             return <div className="" key={index}>
-                                <button type="button" className={`btn-${widget.toLowerCase(0)}`}>{widget}</button>
+                                <Draggable>
+                                    <button type="button" className={`btn-${widget.toLowerCase(0)}`}>{widget}</button>
+                                </Draggable>
                             </div>
                         })}
                     </div>
