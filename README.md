@@ -24,3 +24,4 @@
 8. **EJS :** To embed JavaScript code directly into the HTML templates
 9. **JWT :** Used for an user authentication
 10. **Nodemailer :** To send emails from server
+11. **React-Draggable :** For making elements draggable
