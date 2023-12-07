@@ -1,61 +1,25 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom';
 import './style.css'
 import Navbar from '../Navbar/Navbar';
-import avatar from '../Assets/img/avatar.png'
+import { clients } from '../Assets/data/clients';
 
 const Dashboard = () => {
 
-    let navigate = useNavigate();
-    const [user, setUser] = useState("");
-
-    const handleLogout = () => {
-        localStorage.removeItem('token')
-        navigate("/login")
-    }
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.post('http://localhost:5000/dashboard', {
-                    token: localStorage.getItem('token'),
-                });
-                const data = await response.data;
-                setUser(data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchData();
-    }, []);
-
     return (
-        // <div className='signup'>
-        //     <div className="container">
-        //         <h1 className='heading' style={{ fontSize: "2.5rem" }}>Dashboard</h1>
-        //         <div className="">
-        //             <p className="text" style={{ fontSize: "18px", fontWeight: "500" }}>Fullname : <span style={{ fontWeight: "400" }}>{user.fullname}</span></p>
-        //             <p className="text" style={{ fontSize: "18px", fontWeight: "500" }}>Gender : <span style={{ fontWeight: "400" }}>{user.gender}</span></p>
-        //             <p className="text" style={{ fontSize: "18px", fontWeight: "500" }}>Email : <span style={{ fontWeight: "400" }}>{user.email}</span></p>
-        //             <p className="text" style={{ fontSize: "18px", fontWeight: "500" }}>Phone : <span style={{ fontWeight: "400" }}>{user.phNo}</span></p>
-        //         </div>
-        //         <button type="submit" className="btn" onClick={handleLogout}>Logout</button>
-        //     </div>
-        // </div>
         <>
             <Navbar />
             <div className="contents">
                 <div className="left">
                     <ul className="leftItem">
-                        <li className='item'><Link className="dropdown-item" to="/#">
-                            <i className="fa-solid fa-house"></i><span>Dashboard</span></Link>
+                        <li className='item'><Link className="dropdown-item" to="/dashboard" style={{color: "white"}}>
+                            <i className="fa-solid fa-house" style={{color: "white"}}></i><span>Dashboard</span></Link>
                         </li>
-                        <li className='item'><Link className="dropdown-item" to="/#">
-                            <i className="fa-solid fa-rectangle-list"></i><span>Forms</span></Link>
+                        <li className='item'><Link className="dropdown-item" to="/friends">
+                            <i className="fa-solid fa-user-group"></i><span>Friends</span></Link>
                         </li>
-                        <li className='item'><Link className="dropdown-item" to="/#">
-                            <i className="fa-solid fa-layer-group"></i><span>Cards</span></Link>
+                        <li className='item'><Link className="dropdown-item" to="/teams">
+                            <i className="fa-solid fa-people-group"></i><span>Teams</span></Link>
                         </li>
                         <li className='item'><Link className="dropdown-item" to="/#">
                             <i className="fa-solid fa-chart-pie"></i><span>Charts</span></Link>
@@ -89,7 +53,7 @@ const Dashboard = () => {
                             <div className="card mb-3">
                                 <div className="row g-0">
                                     <div className="col-md-4">
-                                    <i className="fa-solid fa-user" style={{background: "#CC5500"}}></i>
+                                        <i className="fa-solid fa-user" style={{ background: "#CC5500" }}></i>
                                     </div>
                                     <div className="col-md-8">
                                         <div className="card-body">
@@ -104,7 +68,7 @@ const Dashboard = () => {
                             <div className="card mb-3">
                                 <div className="row g-0">
                                     <div className="col-md-4">
-                                    <i className="fa-solid fa-money-bill" style={{background: "#50C878"}}></i>
+                                        <i className="fa-solid fa-money-bill" style={{ background: "#50C878" }}></i>
                                     </div>
                                     <div className="col-md-8">
                                         <div className="card-body">
@@ -119,7 +83,7 @@ const Dashboard = () => {
                             <div className="card mb-3">
                                 <div className="row g-0">
                                     <div className="col-md-4">
-                                    <i className="fa-solid fa-cart-shopping" style={{background: "#0096FF"}}></i>
+                                        <i className="fa-solid fa-cart-shopping" style={{ background: "#0096FF" }}></i>
                                     </div>
                                     <div className="col-md-8">
                                         <div className="card-body">
@@ -134,10 +98,10 @@ const Dashboard = () => {
                             <div className="card mb-3">
                                 <div className="row g-0">
                                     <div className="col-md-4">
-                                    <i className="fa-solid fa-message" style={{background: "#5F9EA0"}}></i>
+                                        <i className="fa-solid fa-message" style={{ background: "#5F9EA0" }}></i>
                                     </div>
                                     <div className="col-md-8">
-                                        <div className="card-body" style={{padding: "15px 5px"}}>
+                                        <div className="card-body" style={{ padding: "15px 5px" }}>
                                             <h5 className="card-title">Pending contacts</h5>
                                             <p className="card-text">35</p>
                                         </div>
@@ -146,8 +110,39 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="">
-                        <span>.</span>
+                    <div className="third">
+                        <table className="table-dark">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Client</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                { clients.map((client, id) => (
+                                    <tr key={id}>
+                                        <td>
+                                            <div className="d-flex align-items-center">
+                                                <div className="" style={{ height: "30px" }}>
+                                                    <img src={client.image} alt='' className="clientImg" />
+                                                </div>
+                                                <div className="align-self-center ms-2 clientDetails">
+                                                    <span style={{ fontWeight: "600", fontSize: "14px" }}>{client.name}</span>
+                                                    <span style={{ fontWeight: "300", fontSize: "12px" }}>{client.designation}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{client.amount}</td>
+                                        <td>
+                                            <span className={`badge bg-${client.status.type}`}>{client.status.value}</span>
+                                        </td>
+                                        <td>{client.date}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
