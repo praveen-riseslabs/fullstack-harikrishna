@@ -3,36 +3,12 @@
     overflow: hidden;
 }
 
-.left {
-    color: #858585;
-    background: #282c34;
-    height: 92.5vh;
-    width: 20vw;
-}
-
 .right {
     color: white;
     background: #1f2229;
-    height: 92.5vh;
+    height: 92.9vh;
     width: 80vw;
     padding: 30px;
-}
-
-.leftItem i {
-    color: #858585;
-    margin-right: 20px;
-}
-
-.leftItem {
-    margin-top: 20px;
-}
-
-.leftItem li {
-    list-style: none;
-}
-
-.item {
-    height: 35px;
 }
 
 .right h1 {
@@ -107,13 +83,15 @@
     padding: 10px 15px;
     font-size: 16px;
     font-weight: 600;
-    border-bottom: 2px solid #1f2229;;
+    border-bottom: 2px solid #1f2229;
+    ;
 }
 
 .table-dark td {
     padding: 5px 15px;
     font-size: 16px;
-    border-bottom: 2px solid #1f2229;;
+    border-bottom: 2px solid #1f2229;
+    ;
 }
 
 .table-dark .clientImg {

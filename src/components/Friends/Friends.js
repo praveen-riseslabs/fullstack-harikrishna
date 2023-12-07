@@ -1,41 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
 import { friends } from '../Assets/data/friends'
+import Sidebar from '../Sidebar/Sidebar'
 
 const Friends = () => {
     return (
         <>
             <Navbar />
             <div className="contents">
-                <div className="left">
-                    <ul className="leftItem">
-                        <li className='item'><Link className="dropdown-item" to="/dashboard">
-                            <i className="fa-solid fa-house"></i><span>Dashboard</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/friends" style={{color: "white"}}>
-                            <i className="fa-solid fa-user-group" style={{color: "white"}}></i><span>Friends</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/teams">
-                            <i className="fa-solid fa-people-group"></i><span>Teams</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/#">
-                            <i className="fa-solid fa-chart-pie"></i><span>Charts</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/#">
-                            <i className="fa-solid fa-toggle-off"></i><span>Buttons</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/#">
-                            <i className="fa-solid fa-paste"></i><span>Modals</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/#">
-                            <i className="fa-solid fa-table-columns"></i><span>Tables</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/#">
-                            <i className="fa-solid fa-file"></i><span>Pages</span></Link>
-                        </li>
-                    </ul>
-                </div>
+                <Sidebar />
                 <div className="right">
                     <h1>Friends</h1>
                     <div className="third">

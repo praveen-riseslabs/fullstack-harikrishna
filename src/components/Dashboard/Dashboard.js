@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './style.css'
 import Navbar from '../Navbar/Navbar';
 import { clients } from '../Assets/data/clients';
+import Sidebar from '../Sidebar/Sidebar';
 
 const Dashboard = () => {
 
@@ -10,34 +11,7 @@ const Dashboard = () => {
         <>
             <Navbar />
             <div className="contents">
-                <div className="left">
-                    <ul className="leftItem">
-                        <li className='item'><Link className="dropdown-item" to="/dashboard" style={{color: "white"}}>
-                            <i className="fa-solid fa-house" style={{color: "white"}}></i><span>Dashboard</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/friends">
-                            <i className="fa-solid fa-user-group"></i><span>Friends</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/teams">
-                            <i className="fa-solid fa-people-group"></i><span>Teams</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/#">
-                            <i className="fa-solid fa-chart-pie"></i><span>Charts</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/#">
-                            <i className="fa-solid fa-toggle-off"></i><span>Buttons</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/#">
-                            <i className="fa-solid fa-paste"></i><span>Modals</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/#">
-                            <i className="fa-solid fa-table-columns"></i><span>Tables</span></Link>
-                        </li>
-                        <li className='item'><Link className="dropdown-item" to="/#">
-                            <i className="fa-solid fa-file"></i><span>Pages</span></Link>
-                        </li>
-                    </ul>
-                </div>
+                <Sidebar />
                 <div className="right">
                     <h1>Dashboard</h1>
                     <div className="first">

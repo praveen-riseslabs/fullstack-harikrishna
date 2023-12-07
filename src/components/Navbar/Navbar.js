@@ -59,8 +59,8 @@ const Navbar = () => {
                                     <img src={avatar} alt="" style={{ height: "30px", width: "30px", filter: "invert(1)" }} />
                                 </button>
                                 <ul className="dropdown-menu" style={{ transform: "translateX(-85px)", background: "rgb(39 39 39)" }}>
-                                    <li className='text-center text-secondary'><strong>{user.fullname}</strong></li>
-                                    <li><Link className="dropdown-item text-secondary" to="/forgot-password">Reset Password</Link></li>
+                                    <li className='text-center' style={{ color: "white"}}><strong>{user.fullname}</strong></li>
+                                    <li><Link className="dropdown-item text-secondary" style={{ color: "white"}} to="/forgot-password">Reset Password</Link></li>
                                     <li><button type="submit" className="dropdown-item text-secondary" onClick={handleLogout} style={{ margin: "none" }}>Logout</button></li>
                                 </ul>
                             </div>

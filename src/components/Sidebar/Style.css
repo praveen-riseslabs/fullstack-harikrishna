@@ -1,0 +1,22 @@
+.left {
+    color: #858585;
+    background: #282c34;
+    height: 92.9vh;
+    width: 20vw;
+}
+
+.leftItem i {
+    margin-right: 20px;
+}
+
+.leftItem {
+    margin-top: 20px;
+}
+
+.leftItem li {
+    list-style: none;
+}
+
+.item {
+    padding: 5px 0px;
+}
