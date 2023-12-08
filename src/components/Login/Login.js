@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom"
 
-const Login = () => {
+const Login = (props) => {
 
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
@@ -16,12 +16,12 @@ const Login = () => {
       if (data) {
         localStorage.setItem('token', data.token)
         navigate("/dashboard");
-        alert("Logged in Successfully")
+        props.showAlert("success", "Logged in Successfully")
       } else {
-        alert("Invalid Login Credentials!")
+        props.showAlert("danger", "Invalid Login Credentials!")
       }
     } catch (error) {
-      console.error("Error during registration:", error);
+      props.showAlert("danger", "Invalid Login Credentials!")
     }
   }
 
@@ -45,6 +45,9 @@ const Login = () => {
           <button type="submit" className="btn">Login</button>
           <div className="text-center my-3">
             <Link to='/forgot-password'>Forgot Password</Link>
+          </div>
+          <div className="text-center my-3">
+            Don't have an account? <Link to='/register'>Signup</Link>
           </div>
         </form>
       </div>

@@ -3,7 +3,7 @@ import './signup.css'
 import axios from 'axios';
 import { useNavigate } from "react-router-dom"
 
-const Signup = () => {
+const Signup = (props) => {
 
   const [fullname, setFullname] = useState()
   const [username, setUsername] = useState()
@@ -24,12 +24,12 @@ const Signup = () => {
       if (data) {
         localStorage.setItem('token', data.authToken)
         navigate("/login");
-        alert("Account Created Successfully")
+        props.showAlert("success", "Account Created Successfully, Login Now!")
       } else {
-        alert("Invalid Credentials!")
+        props.showAlert("danger", "Invalid Credentials!")
       }
     } catch (error) {
-      console.error("Error during registration:", error);
+      props.showAlert("danger", "Invalid Credentials!")
     }
   }
 
