@@ -6,10 +6,10 @@ const Sidebar = () => {
 
     const activeStyle = ({ isActive }) => {
         return {
-            color : isActive? "white" : "#858585"
+            color: isActive ? "white" : "#858585"
         }
     }
-    
+
     return (
         <div className="left">
             <ul className="leftItem">
@@ -22,8 +22,8 @@ const Sidebar = () => {
                 <li className='item'><NavLink className="dropdown-item" to="/teams" style={activeStyle}>
                     <i className="fa-solid fa-people-group"></i><span>Teams</span></NavLink>
                 </li>
-                <li className='item'><NavLink className="dropdown-item" to="/#">
-                    <i className="fa-solid fa-chart-pie"></i><span>Charts</span></NavLink>
+                <li className='item'><NavLink className="dropdown-item" to="/addemployee" style={activeStyle}>
+                    <i className="fa-solid fa-user-plus"></i><span>Add Employee</span></NavLink>
                 </li>
                 <li className='item'><NavLink className="dropdown-item" to="/#">
                     <i className="fa-solid fa-toggle-off"></i><span>Buttons</span></NavLink>
