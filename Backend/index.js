@@ -215,6 +215,15 @@ app.post('/addemployee', [
     }
 });
 
+app.get('/allemployees', async (req, res) => {
+    try {
+        const allEmployees = await EmployeeModel.find({})
+        res.send(allEmployees)
+    } catch (error) {
+        console.log(error)
+    }
+});
+
 
 
 app.listen(PORT, () => {

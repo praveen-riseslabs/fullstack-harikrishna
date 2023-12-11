@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar/Navbar'
 import Sidebar from '../Sidebar/Sidebar'
+import axios from 'axios'
 
 const AllEmployees = () => {
+
+    const [employee, setEmployee] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/allemployees')
+            .then((response) => {
+                setEmployee(response.data)
+            })
+            .catch((error) => console.log(error))
+    }, [])
+
     return (
         <>
             <Navbar />
@@ -22,6 +34,15 @@ const AllEmployees = () => {
                                 </tr>
                             </thead>
                             <tbody>
+                                {employee.map((item) => (
+                                    <tr>
+                                        <th scope="row">{item.emp_name}</th>
+                                        <td>{item.emp_id}</td>
+                                        <td>{item.designation}</td>
+                                        <td>{item.reporting_manager}</td>
+                                        <td>{item.hr_manager}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
