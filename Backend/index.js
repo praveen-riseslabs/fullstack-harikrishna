@@ -217,8 +217,15 @@ app.post('/addemployee', [
 
 app.get('/allemployees', async (req, res) => {
     try {
-        const allEmployees = await EmployeeModel.find({})
-        res.send(allEmployees)
+
+        const page = req.query.page ? parseInt(req.query.page) : 1;
+        const size = req.query.size ? parseInt(req.query.size) : 10;
+
+        const skip = (page -1) * size;
+
+        const total = await EmployeeModel.countDocuments()
+        const allEmployees = await EmployeeModel.find().skip(skip).limit(size)
+        res.json({allEmployees,total,page,size})
     } catch (error) {
         console.log(error)
     }
