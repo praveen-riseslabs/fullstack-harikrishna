@@ -43,7 +43,7 @@ function App() {
           <Route exact path="/dashboard" element={<Dashboard showAlert={showAlert} />}></Route>
           <Route exact path="/friends" element={<Friends />}></Route>
           <Route exact path="/teams" element={<Teams />}></Route>
-          <Route exact path="/addemployee" element={<AddEmployee />}></Route>
+          <Route exact path="/addemployee" element={<AddEmployee showAlert={showAlert} />}></Route>
           <Route exact path="/allemployee" element={<AllEmployees />}></Route>
           <Route exact path="/drag-drop" element={<DragandDrop />}></Route>
         </Routes>

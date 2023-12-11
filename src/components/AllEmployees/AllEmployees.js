@@ -36,11 +36,11 @@ const AllEmployees = () => {
                             <tbody>
                                 {employee.map((item, _id) => (
                                     <tr key={_id}>
-                                        <th scope="row">{item.emp_name}</th>
-                                        <td>{item.emp_id}</td>
-                                        <td>{item.designation}</td>
-                                        <td>{item.reporting_manager}</td>
-                                        <td>{item.hr_manager}</td>
+                                        <th scope="row" style={{ fontWeight: "400" }}>{item.emp_name}</th>
+                                        <td style={{ fontWeight: "400" }}>{item.emp_id}</td>
+                                        <td style={{ fontWeight: "400" }}>{item.designation}</td>
+                                        <td style={{ fontWeight: "400" }}>{item.reporting_manager}</td>
+                                        <td style={{ fontWeight: "400" }}>{item.hr_manager}</td>
                                     </tr>
                                 ))}
                             </tbody>
