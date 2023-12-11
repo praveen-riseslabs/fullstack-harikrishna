@@ -34,8 +34,8 @@ const AllEmployees = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {employee.map((item) => (
-                                    <tr>
+                                {employee.map((item, _id) => (
+                                    <tr key={_id}>
                                         <th scope="row">{item.emp_name}</th>
                                         <td>{item.emp_id}</td>
                                         <td>{item.designation}</td>
