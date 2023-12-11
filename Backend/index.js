@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const nodemailer = require("nodemailer");
+const EmployeeModel = require('./models/employees')
 
 
 const JWT_SECRET = 'SecretStr!ng'
@@ -182,6 +183,38 @@ app.post("/reset-password/:id/:token", async (req, res) => {
         res.json({ status: "Something Went Wrong" });
     }
 });
+
+app.post('/addemployee', [
+    body('emp_name', 'Enter a valid Employee name').isLength({ min: 3 }),
+    body('emp_id', 'Enter a valid Employee ID').isLength({ min: 3 }),
+    body('designation', 'Enter a valid Designation').isLength({ min: 3 }),
+    body('reporting_manager', 'Enter a valid Employee name').isLength({ min: 3 }),
+    body('hr_manager', 'Enter a valid Employee name').isLength({ min: 3 }),
+    body('gender', 'Choose an Option').exists()
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+        const employee = await EmployeeModel.create({
+            emp_name: req.body.emp_name,
+            emp_id: req.body.emp_id,
+            designation: req.body.designation,
+            reporting_manager: req.body.reporting_manager,
+            hr_manager: req.body.hr_manager,
+            gender: req.body.gender
+        })
+        res.json(employee)
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.status(400).json({ error: 'Employee ID already exists' });
+        }
+        console.log(error.message);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 
 
 app.listen(PORT, () => {
