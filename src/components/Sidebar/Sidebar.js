@@ -25,8 +25,8 @@ const Sidebar = () => {
                 <li className='item'><NavLink className="dropdown-item" to="/addemployee" style={activeStyle}>
                     <i className="fa-solid fa-user-plus"></i><span>Add Employee</span></NavLink>
                 </li>
-                <li className='item'><NavLink className="dropdown-item" to="/#">
-                    <i className="fa-solid fa-toggle-off"></i><span>Buttons</span></NavLink>
+                <li className='item'><NavLink className="dropdown-item" to="/allemployee" style={activeStyle}>
+                    <i className="fa-solid fa-list"></i><span>All Employees</span></NavLink>
                 </li>
                 <li className='item'><NavLink className="dropdown-item" to="/#">
                     <i className="fa-solid fa-paste"></i><span>Modals</span></NavLink>
