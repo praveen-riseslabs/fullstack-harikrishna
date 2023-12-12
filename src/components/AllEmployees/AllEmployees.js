@@ -12,27 +12,35 @@ const AllEmployees = () => {
     const [total, setTotal] = useState(0);
     const [activePage, setActivePage] = useState(1);
     const [search, setSearch] = useState('');
+    const [sort, setSort] = useState('')
 
     useEffect(() => {
         fetchData();
         // eslint-disable-next-line
-    }, []);
+    }, [sort]);
 
     const fetchData = () => {
         axios.get('http://localhost:5000/allemployees', {
             params: {
                 page: activePage,
-                size: Limit
+                size: Limit,
+                sort: sort
             }
         })
             .then(({ data }) => {
-                // console.log(data)
+                console.log(data)
                 setActivePage(activePage + 1)
-                setEmployee([...employee, ...data.allEmployees])
+                setEmployee(prevEmployee => [...prevEmployee, ...data.allEmployees]);
                 setTotal(data.total)
             })
             .catch((error) => console.log(error))
     }
+
+    const setSortAndResetPage = (sortBy) => {
+        setSort(sortBy);
+        setActivePage(1);
+        setEmployee([]);
+    };
 
     return (
         <>
@@ -46,19 +54,20 @@ const AllEmployees = () => {
                             <span className="input-group-text" id="basic-addon1" style={{ background: "#282c34", color: "white", border: "1px solid #858585" }}>
                                 <i className="fa-solid fa-magnifying-glass"></i>
                             </span>
-                            <input type="text" className="form-control" placeholder="" aria-label="search" aria-describedby="basic-addon1" style={{ background: "#282c34", color: "white", border: "1px solid #858585" }} onChange={(e) => {setSearch(e.target.value)}} />
+                            <input type="text" className="form-control" placeholder="" aria-label="search" aria-describedby="basic-addon1" style={{ background: "#282c34", color: "white", border: "1px solid #858585" }} onChange={(e) => { setSearch(e.target.value) }} />
                         </div>
                     </form>
                     <div className="third" >
-                        <InfiniteScroll dataLength={employee.length} next={fetchData} hasMore={employee.length < total} >
+                        <InfiniteScroll key={sort} dataLength={employee.length} next={fetchData} hasMore={employee.length < total} >
                             <table className="table-dark">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Employee Name</th>
-                                        <th scope="col">Employee ID</th>
-                                        <th scope="col">Designation</th>
-                                        <th scope="col">Reporting Manager</th>
-                                        <th scope="col">HR Manager</th>
+                                        <th scope="col" onClick={() => setSortAndResetPage("emp_name")}>Employee Name</th>
+                                        <th scope="col" onClick={() => setSortAndResetPage("emp_id")}>Employee ID</th>
+                                        <th scope="col" onClick={() => setSortAndResetPage("designation")}>Designation</th>
+                                        <th scope="col" onClick={() => setSortAndResetPage("reporting_manager")}>Reporting Manager</th>
+                                        <th scope="col" onClick={() => setSortAndResetPage("hr_manager")}>HR Manager</th>
+                                        <th scope="col" onClick={() => setSortAndResetPage("gender")}>Gender</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,6 +80,7 @@ const AllEmployees = () => {
                                             <td style={{ fontWeight: "400" }}>{item.designation}</td>
                                             <td style={{ fontWeight: "400" }}>{item.reporting_manager}</td>
                                             <td style={{ fontWeight: "400" }}>{item.hr_manager}</td>
+                                            <td style={{ fontWeight: "400" }}>{item.gender}</td>
                                         </tr>
                                     ))}
                                 </tbody>
