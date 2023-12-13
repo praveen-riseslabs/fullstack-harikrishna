@@ -1,8 +1,33 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar/Navbar'
-import data from '../Assets/data/MOCK_DATA.json'
+import axios from 'axios';
 
 const Dashboard = () => {
+
+    const [user, setUser] = useState([]);
+
+    const formatDate = (dateString) => {
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.post('http://localhost:5000/dashboard', {
+                    token: localStorage.getItem('token'),
+                });
+                const data = await response.data;
+                setUser(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    var number = 1;
+
     return (
         <>
             <Navbar />
@@ -15,20 +40,22 @@ const Dashboard = () => {
                         <thead>
                             <tr className="table-secondary">
                                 <th scope="col">No.</th>
-                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">Amount</th>
-                                <th scope="col">Type</th>
+                                {/* <th scope="col">Type</th> */}
+                                <th scope="col">Message</th>
                                 <th scope="col">Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((item) => (
-                                <tr key={item.id}>
-                                    <td>{item.id}</td>
-                                    <td>{item.name}</td>
-                                    <td>{item.amount}</td>
-                                    <td>{item.type}</td>
-                                    <td>{item.date}</td>
+                            {user.map((user, id) => (
+                                <tr key={id}>
+                                    <td>{number++}</td>
+                                    <td>{user.Toemail}</td>
+                                    <td>{user.amount}</td>
+                                    {/* <td>{user.type}</td> */}
+                                    <td>{user.message}</td>
+                                    <td>{formatDate(user.date)}</td>
                                 </tr>
                             ))}
                         </tbody>

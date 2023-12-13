@@ -55,10 +55,11 @@ const Navbar = () => {
                                 <Link className="nav-link" to="/senddetails">Send Payments</Link>
                             </li>
                         </ul>
+                        <button type="button" className="btn" onClick={handleLogout} style={{ marginTop: "0", width: "auto" }}>
+                            Logout
+                        </button>
                     </div>
-                    <button type="button" className="btn" onClick={handleLogout} style={{ marginTop: "0", width: "auto" }}>
-                        Logout
-                    </button>
+
                 </div>
             </nav>
         </div>

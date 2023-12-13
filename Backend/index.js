@@ -115,7 +115,7 @@ app.post('/dashboard', (req, res) => {
     try {
         const user = jwt.verify(token, JWT_SECRET)
         const email = user.email;
-        UserModel.findOne({ email: email }).select("-password")
+        TransactionModel.find({ Toemail: email })
             .then((data) => {
                 res.send(data)
             })

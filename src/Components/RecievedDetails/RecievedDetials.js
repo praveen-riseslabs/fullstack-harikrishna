@@ -7,6 +7,7 @@ const RecievedDetials = () => {
         <>
             <Navbar />
             <div className="container" style={{ height: "auto", width: "auto", marginTop: "30px" }}>
+            <h1 className='my-4'>Recieved Payments</h1>
                 <table className="table">
                     <thead>
                         <tr className="table-secondary">
