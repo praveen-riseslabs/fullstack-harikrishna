@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const UserModel = require('./models/users')
+const TransactionModel = require('./models/transaction')
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
@@ -87,22 +88,44 @@ app.post('/login', [
     }
 });
 
-// app.post('/dashboard', (req, res) => {
-//     const { token } = req.body;
-//     try {
-//         const user = jwt.verify(token, JWT_SECRET)
-//         const email = user.email;
-//         UserModel.findOne({ email: email }).select("-password")
-//             .then((data) => {
-//                 res.send(data)
-//             })
-//             .catch((error) => {
-//                 res.send({ status: "Error", data: error })
-//             })
-//     } catch (error) {
-//         console.log(error)
-//     }
-// });
+app.post('/sendmoney', [
+    body('Toemail', 'Enter an Email').exists(),
+    body('amount', 'Enter a valid amount').isLength({ min: 0 }),
+    body('message', 'Enter some message').isLength({ min: 0 })
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+        const transaction = await TransactionModel.create({
+            Toemail: req.body.Toemail,
+            amount: req.body.amount,
+            message: req.body.message
+        })
+        res.json(transaction)
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+app.post('/dashboard', (req, res) => {
+    const { token } = req.body;
+    try {
+        const user = jwt.verify(token, JWT_SECRET)
+        const email = user.email;
+        UserModel.findOne({ email: email }).select("-password")
+            .then((data) => {
+                res.send(data)
+            })
+            .catch((error) => {
+                res.send({ status: "Error", data: error })
+            })
+    } catch (error) {
+        console.log(error)
+    }
+});
 
 
 // app.post('/addemployee', [

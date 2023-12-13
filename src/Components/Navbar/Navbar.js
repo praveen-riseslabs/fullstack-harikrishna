@@ -1,7 +1,40 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
+
+    let navigate = useNavigate();
+    // eslint-disable-next-line
+    const [user, setUser] = useState("");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.post('http://localhost:5000/dashboard', {
+                    token: localStorage.getItem('token'),
+                });
+                const data = await response.data;
+                setUser(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (!localStorage.getItem('token')) {
+            navigate("/login")
+        }
+        // eslint-disable-next-line
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        navigate("/login")
+    }
+
     return (
         <div>
             <nav className="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
@@ -23,6 +56,9 @@ const Navbar = () => {
                             </li>
                         </ul>
                     </div>
+                    <button type="button" className="btn" onClick={handleLogout} style={{ marginTop: "0", width: "auto" }}>
+                        Logout
+                    </button>
                 </div>
             </nav>
         </div>
