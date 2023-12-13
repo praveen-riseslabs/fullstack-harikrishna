@@ -25,3 +25,4 @@
 9. **JWT :** Used for an user authentication
 10. **Nodemailer :** To send emails from server
 11. **React-Draggable :** For making elements draggable
+12. **React Infinite Scroll :** To implement infinite scrolling
