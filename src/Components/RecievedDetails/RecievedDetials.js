@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar/Navbar'
 import axios from 'axios';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
+import { DateRangePicker } from 'react-date-range';
 
 const RecievedDetials = () => {
 
     const [user, setUser] = useState([]);
+    const [allUser, setAllUser] = useState([]);
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
     const formatDate = (dateString) => {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -19,6 +25,7 @@ const RecievedDetials = () => {
                 });
                 const data = await response.data;
                 setUser(data);
+                setAllUser(data);
             } catch (error) {
                 console.error(error);
             }
@@ -26,13 +33,35 @@ const RecievedDetials = () => {
         fetchData();
     }, []);
 
-    var number = 1;
+    const handleSelect = (date) => {
+        let filteredUsers = allUser.filter((user) => {
+            let transactionDate = new Date(user.date)
+            return (
+                transactionDate >= date.selection.startDate && transactionDate <= date.selection.endDate
+            )
+        })
+        setStartDate(date.selection.startDate)
+        setEndDate(date.selection.endDate)
+        setUser(filteredUsers)
+    }
+
+    const selectionRange = {
+        startDate: startDate,
+        endDate: endDate,
+        key: 'selection',
+    }
 
     return (
         <>
             <Navbar />
             <div className="container" style={{ height: "auto", width: "auto", marginTop: "30px" }}>
-            <h1 className='my-4'>Recieved Payments</h1>
+                <h1 className='my-4'>Recieved Payments</h1>
+
+                <DateRangePicker
+                    ranges={[selectionRange]}
+                    onChange={handleSelect}
+                />
+
                 <table className="table">
                     <thead>
                         <tr className="table-secondary">
@@ -46,7 +75,7 @@ const RecievedDetials = () => {
                     <tbody>
                         {user.map((user, id) => (
                             <tr key={id}>
-                                <td>{number++}</td>
+                                <td>{id + 1}</td>
                                 <td>{user.Fromemail}</td>
                                 <td>{user.amount}</td>
                                 <td>{user.message}</td>
