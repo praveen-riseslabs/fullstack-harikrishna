@@ -5,6 +5,7 @@ import axios from 'axios';
 const Dashboard = () => {
 
     const [user, setUser] = useState([]);
+    const [transaction, setTransaction] = useState([]);
 
     const formatDate = (dateString) => {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -17,8 +18,10 @@ const Dashboard = () => {
                 const response = await axios.post('http://localhost:5000/dashboard', {
                     token: localStorage.getItem('token'),
                 });
-                const data = await response.data;
-                setUser(data);
+                const transactionData = await response.data.transactionData;
+                const userData = await response.data.userData[0];
+                setTransaction(transactionData);
+                setUser(userData);
             } catch (error) {
                 console.error(error);
             }
@@ -33,7 +36,7 @@ const Dashboard = () => {
             <Navbar />
             <div className="contents">
                 <h3 className='text-center my-4'>Current Balance</h3>
-                <h3 className='text-center text-secondary mb-5'>&#8377;624</h3>
+                <h3 className='text-center text-secondary mb-5'>&#8377; {user.wallet} </h3>
                 <h3 className='text-center my-4'>All Transactions</h3>
                 <div className="container" style={{ height: "auto", width: "auto" }}>
                     <table className="table">
@@ -49,15 +52,15 @@ const Dashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {user.map((user, id) => (
+                            {transaction.map((transaction, id) => (
                                 <tr key={id}>
                                     <td>{number++}</td>
-                                    <td>{user.Fromemail}</td>
-                                    <td>{user.Toemail}</td>
-                                    <td>{user.amount}</td>
+                                    <td>{transaction.Fromemail}</td>
+                                    <td>{transaction.Toemail}</td>
+                                    <td>{transaction.amount}</td>
                                     {/* <td>{user.type}</td> */}
-                                    <td>{user.message}</td>
-                                    <td>{formatDate(user.date)}</td>
+                                    <td>{transaction.message}</td>
+                                    <td>{formatDate(transaction.date)}</td>
                                 </tr>
                             ))}
                         </tbody>

@@ -114,18 +114,18 @@ app.post('/sendmoney', [
     }
 });
 
-app.post('/dashboard', (req, res) => {
+app.post('/dashboard', async (req, res) => {
     const { token } = req.body;
     try {
         const user = jwt.verify(token, JWT_SECRET)
         const email = user.email;
-        TransactionModel.find({ $or: [{ Fromemail: email }, { Toemail: email }] })
-            .then((data) => {
-                res.send(data)
-            })
-            .catch((error) => {
-                res.send({ status: "Error", data: error })
-            })
+        const userDataPromise = UserModel.find({ email });
+        const transactionDataPromise  = TransactionModel.find({ $or: [{ Fromemail: email }, { Toemail: email }] });
+        const [userData, transactionData] = await Promise.all([
+            userDataPromise,
+            transactionDataPromise,
+        ]);
+        res.send({ userData, transactionData });
     } catch (error) {
         console.log(error)
     }

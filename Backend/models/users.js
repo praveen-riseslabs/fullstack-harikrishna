@@ -26,6 +26,10 @@ const UserSchema = new mongoose.Schema({
     gender: {
         type: String,
         required: true
+    },
+    wallet: {
+        type: String,
+        default: "1000"
     }
 });
 
