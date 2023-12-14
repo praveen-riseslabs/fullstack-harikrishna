@@ -101,13 +101,26 @@ app.post('/sendmoney', [
     try {
         const user = jwt.verify(token, JWT_SECRET)
         const email = user.email;
-        const transaction = await TransactionModel.create({
-            Fromemail: email,
-            Toemail: req.body.Toemail,
-            amount: req.body.amount,
-            message: req.body.message
-        })
-        res.json(transaction)
+        var wallet = 0;
+        const userData = await UserModel.findOne({ email });
+        if (userData) {
+            wallet = userData.wallet;
+            const recUser = req.body.Toemail
+            const sendAmount = parseInt(req.body.amount);
+            if (sendAmount <= wallet) {
+                const transaction = await TransactionModel.create({
+                    Fromemail: email,
+                    Toemail: req.body.Toemail,
+                    amount: sendAmount,
+                    message: req.body.message
+                })
+                await UserModel.updateOne({ email }, { $set: { wallet: wallet - sendAmount } });
+                await UserModel.updateOne({ email: recUser }, { $set: { wallet: parseInt(wallet) + sendAmount } });
+                res.json(transaction)
+            } else {
+                res.status(400).json({ error: "Insufficient Balance" });
+            }
+        }
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: 'Server error' });
@@ -120,7 +133,7 @@ app.post('/dashboard', async (req, res) => {
         const user = jwt.verify(token, JWT_SECRET)
         const email = user.email;
         const userDataPromise = UserModel.find({ email });
-        const transactionDataPromise  = TransactionModel.find({ $or: [{ Fromemail: email }, { Toemail: email }] });
+        const transactionDataPromise = TransactionModel.find({ $or: [{ Fromemail: email }, { Toemail: email }] });
         const [userData, transactionData] = await Promise.all([
             userDataPromise,
             transactionDataPromise,

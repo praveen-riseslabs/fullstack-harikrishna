@@ -30,6 +30,7 @@ const SendMoney = () => {
             }
         } catch (error) {
             console.log(error)
+            alert("Insufficient Balance")
         }
     }
 
