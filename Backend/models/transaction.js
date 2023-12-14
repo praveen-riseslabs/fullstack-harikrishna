@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const TransactionSchema = new mongoose.Schema({
+    Fromemail: {
+        type: String,
+        required: true,
+    },
     Toemail: {
         type: String,
         required: true

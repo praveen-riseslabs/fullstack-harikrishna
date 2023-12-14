@@ -14,7 +14,7 @@ const SendDetails = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.post('http://localhost:5000/dashboard', {
+                const response = await axios.post('http://localhost:5000/sendpayments', {
                     token: localStorage.getItem('token'),
                 });
                 const data = await response.data;
@@ -37,7 +37,7 @@ const SendDetails = () => {
                     <thead>
                         <tr className="table-secondary">
                             <th scope="col">No.</th>
-                            <th scope="col">Email</th>
+                            <th scope="col">To Email</th>
                             <th scope="col">Amount</th>
                             {/* <th scope="col">Type</th> */}
                             <th scope="col">Message</th>

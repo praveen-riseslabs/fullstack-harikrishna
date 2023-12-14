@@ -97,8 +97,12 @@ app.post('/sendmoney', [
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
+    const { token } = req.body;
     try {
+        const user = jwt.verify(token, JWT_SECRET)
+        const email = user.email;
         const transaction = await TransactionModel.create({
+            Fromemail: email,
             Toemail: req.body.Toemail,
             amount: req.body.amount,
             message: req.body.message
@@ -115,6 +119,23 @@ app.post('/dashboard', (req, res) => {
     try {
         const user = jwt.verify(token, JWT_SECRET)
         const email = user.email;
+        TransactionModel.find({ $or: [{ Fromemail: email }, { Toemail: email }] })
+            .then((data) => {
+                res.send(data)
+            })
+            .catch((error) => {
+                res.send({ status: "Error", data: error })
+            })
+    } catch (error) {
+        console.log(error)
+    }
+});
+
+app.post('/recievedpayments', (req, res) => {
+    const { token } = req.body;
+    try {
+        const user = jwt.verify(token, JWT_SECRET)
+        const email = user.email;
         TransactionModel.find({ Toemail: email })
             .then((data) => {
                 res.send(data)
@@ -127,54 +148,24 @@ app.post('/dashboard', (req, res) => {
     }
 });
 
+app.post('/sendpayments', (req, res) => {
+    const { token } = req.body;
+    try {
+        const user = jwt.verify(token, JWT_SECRET)
+        const email = user.email;
+        TransactionModel.find({ Fromemail: email })
+            .then((data) => {
+                res.send(data)
+            })
+            .catch((error) => {
+                res.send({ status: "Error", data: error })
+            })
+    } catch (error) {
+        console.log(error)
+    }
+});
 
-// app.post('/addemployee', [
-//     body('emp_name', 'Enter a valid Employee name').isLength({ min: 3 }),
-//     body('emp_id', 'Enter a valid Employee ID').isLength({ min: 3 }),
-//     body('designation', 'Enter a valid Designation').isLength({ min: 3 }),
-//     body('reporting_manager', 'Enter a valid Employee name').isLength({ min: 3 }),
-//     body('hr_manager', 'Enter a valid Employee name').isLength({ min: 3 }),
-//     body('gender', 'Choose an Option').exists()
-// ], async (req, res) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//         return res.status(400).json({ errors: errors.array() });
-//     }
-//     try {
-//         const employee = await EmployeeModel.create({
-//             emp_name: req.body.emp_name,
-//             emp_id: req.body.emp_id,
-//             designation: req.body.designation,
-//             reporting_manager: req.body.reporting_manager,
-//             hr_manager: req.body.hr_manager,
-//             gender: req.body.gender
-//         })
-//         res.json(employee)
-//     } catch (error) {
-//         if (error.code === 11000) {
-//             return res.status(400).json({ error: 'Employee ID already exists' });
-//         }
-//         console.log(error.message);
-//         res.status(500).json({ error: 'Server error' });
-//     }
-// });
 
-// app.get('/allemployees', async (req, res) => {
-//     try {
-
-//         const page = parseInt(req.query.page);
-//         const size = parseInt(req.query.size);
-//         const sort = req.query.sort ? req.query.sort : '_id';
-
-//         const skip = (page -1) * size;
-
-//         const total = await EmployeeModel.countDocuments()
-//         const allEmployees = await EmployeeModel.find().skip(skip).limit(size).sort(sort)
-//         res.json({allEmployees,total,page,size})
-//     } catch (error) {
-//         console.log(error)
-//     }
-// });
 
 
 

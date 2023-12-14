@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar/Navbar'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
@@ -8,13 +8,19 @@ const SendMoney = () => {
     const [Toemail, setToEmail] = useState("")
     const [amount, setAmount] = useState("")
     const [message, setMessage] = useState("")
+    const [token, setToken] = useState("")
 
     let navigate = useNavigate();
+
+    useEffect(() => {
+        const userToken = localStorage.getItem('token');
+        setToken(userToken);
+      }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const response = await axios.post('http://localhost:5000/sendmoney', { Toemail, amount, message });
+            const response = await axios.post('http://localhost:5000/sendmoney', { Toemail, amount, message, token });
             const { data } = response;
             if (data) {
                 alert("Amount sent successfully")

@@ -40,7 +40,8 @@ const Dashboard = () => {
                         <thead>
                             <tr className="table-secondary">
                                 <th scope="col">No.</th>
-                                <th scope="col">Email</th>
+                                <th scope="col">From Email</th>
+                                <th scope="col">To Email</th>
                                 <th scope="col">Amount</th>
                                 {/* <th scope="col">Type</th> */}
                                 <th scope="col">Message</th>
@@ -51,6 +52,7 @@ const Dashboard = () => {
                             {user.map((user, id) => (
                                 <tr key={id}>
                                     <td>{number++}</td>
+                                    <td>{user.Fromemail}</td>
                                     <td>{user.Toemail}</td>
                                     <td>{user.amount}</td>
                                     {/* <td>{user.type}</td> */}
