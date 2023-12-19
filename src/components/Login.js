@@ -30,7 +30,7 @@ const Login = () => {
             const response = await axios.post('http://localhost:5000/api/user/login', { email, password }, config);
             const { data } = response
             toast({
-                title: "Registration Successful",
+                title: "Login Successful",
                 status: "success",
                 duration: 5000,
                 isClosable: true,
