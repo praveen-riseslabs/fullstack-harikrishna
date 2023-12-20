@@ -6,6 +6,12 @@ import { getSender } from '../config/ChatLogics';
 import UpdateGroupChatModal from './UpdateGroupChatModal';
 import axios from 'axios';
 import ScrollabelChat from './ScrollabelChat';
+import { io } from 'socket.io-client';
+import Lottie from 'lottie-react';
+import animationData from "../Assets/Animations/TypingAnimation.json";
+
+const ENDPOINT = "http://localhost:5000"
+var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
@@ -14,6 +20,19 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [newMessage, setNewMessage] = useState("");
+    const [socketConnected, setSocketConnected] = useState(false);
+    const [typing, setTyping] = useState(false);
+    const [isTyping, setIsTyping] = useState(false);
+
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: animationData,
+        renderer: 'svg',
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        },
+    };
 
     const fetchMessages = async () => {
         if (!selectedChat) return;
@@ -32,6 +51,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
             setMessages(data)
             setLoading(false)
+            socket.emit("join chat", selectedChat._id)
         } catch (error) {
             Toast({
                 title: "Error Occured!",
@@ -45,12 +65,33 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
 
     useEffect(() => {
+        socket = io(ENDPOINT)
+        socket.emit("setup", user)
+        socket.on("Connected", () => setSocketConnected(true));
+        socket.on("typing", () => setIsTyping(true))
+        socket.on("stop typing", () => setIsTyping(false))
+        // eslint-disable-next-line
+    }, [])
+
+    useEffect(() => {
         fetchMessages()
+        selectedChatCompare = selectedChat
         // eslint-disable-next-line
     }, [selectedChat])
 
+    useEffect(() => {
+        socket.on("message recieved", (newMessageRecieved) => {
+            if (!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved.chat._id) {
+                //notification
+            } else {
+                setMessages([...messages, newMessageRecieved])
+            }
+        })
+    })
+
     const sendMessage = async (event) => {
         if (event.key === "Enter" && newMessage) {
+            socket.emit("stop typing", selectedChat._id)
             try {
                 const config = {
                     headers: {
@@ -66,6 +107,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 }, config);
                 console.log(data);
 
+                socket.emit("new message", data)
                 setMessages([...messages, data])
             } catch (error) {
                 Toast({
@@ -82,6 +124,27 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
     const typingHandler = (e) => {
         setNewMessage(e.target.value)
+
+        if (!socketConnected) {
+            return;
+        }
+
+        if (!typing) {
+            setTyping(true)
+            socket.emit("typing", selectedChat._id)
+        }
+
+        let lastTypingTime = new Date().getTime()
+        var timerLength = 3000;
+        setTimeout(() => {
+            var timeNow = new Date().getTime();
+            var timeDiff = timeNow - lastTypingTime
+
+            if (timeDiff >= timerLength && typing) {
+                socket.emit("stop typing", selectedChat._id)
+                setTyping(false)
+            }
+        }, timerLength);
     }
 
     return (
@@ -127,6 +190,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                 <ScrollabelChat messages={messages} />
                             </div>
                         )}
+                        {isTyping ? <div style={{ width: 40, height: 40 }}>
+                            <Lottie animationData={defaultOptions.animationData} loop={defaultOptions.loop} autoplay={defaultOptions.autoplay} style={{ marginBottom: 15, marginLeft: 0, marginTop: 15 }} />
+                        </div> : (<></>)}
                         <FormControl onKeyDown={sendMessage} id="first-name" isRequired mt={3} display='flex' flexDirection='column-reverse' >
                             <Input variant="filled" bg="#E0E0E0" alignItems='bottom' placeholder="Enter a message.." value={newMessage} onChange={typingHandler} />
                         </FormControl>
