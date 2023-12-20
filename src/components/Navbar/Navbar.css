@@ -1,0 +1,133 @@
+.navbar {
+    /* height: 4rem; */
+    width: 100%;
+    padding: 1rem 2rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-evenly; */
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: #191c24;
+}
+
+.logo-res p {
+    display: none;
+    justify-content: center;
+    color: white;
+    font-weight: 500;
+    font-size: 34px;
+}
+
+.logo p {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 5px;
+    font-size: 24px;
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.search-box-div {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-right: 10px;
+}
+
+.navbar-button {
+    color: #64698c;
+    margin: 0px 40px 0px 0px;
+}
+
+.seacrh-box {
+    background: #191c24;
+    width: 30vw;
+    border-radius: 5px;
+    border: 2px solid #2c2e33;
+    padding: 5px 10px;
+    margin-right: 5rem;
+}
+
+.button-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 3rem;
+}
+
+.new-project-btn {
+    border: none;
+    padding: 2px 10px;
+    border-radius: 5px;
+    background: #00d25b;
+    color: white;
+    margin-right: 30px;
+}
+
+.button i {
+    margin-right: 6px;
+}
+
+.grid, .message, .bell {
+    color: white;
+    padding: 0px 15px;
+    margin: 10px 0px;
+    font-size: 20px;
+}
+
+.grid, .message {
+    border-right: 2px solid #2c2e33;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-img {
+    object-fit: cover;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+}
+
+.avatar-name {
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 1rem;
+}
+
+.button-res {
+    display: none;
+    color: #64698c;
+}
+
+
+@media screen and (max-width: 1235px) {
+    .logo-res p {
+        display: flex;
+        margin-bottom: 0;
+    }
+    .logo, .navbar-button, .button, .seacrh-box, .grid {
+        display: none;
+    }
+    .user-info {
+        margin-right: 40px;
+    }
+    .button-res {
+        display: flex;
+    }
+    .button-group {
+        margin-right: 1.5rem;
+    }
+}
