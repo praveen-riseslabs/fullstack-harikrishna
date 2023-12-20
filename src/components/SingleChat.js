@@ -15,7 +15,7 @@ var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
-    const { selectedChat, setSelectedChat, user } = ChatState();
+    const { selectedChat, setSelectedChat, user, notification, setNotification } = ChatState();
 
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -47,7 +47,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             setLoading(true)
 
             const { data } = await axios.get(`http://localhost:5000/api/message/${selectedChat._id}`, config);
-            // console.log(messages);
 
             setMessages(data)
             setLoading(false)
@@ -82,7 +81,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     useEffect(() => {
         socket.on("message recieved", (newMessageRecieved) => {
             if (!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved.chat._id) {
-                //notification
+                if (!notification.includes(newMessageRecieved)) {
+                    setNotification([newMessageRecieved, ...notification])
+                    setFetchAgain(!fetchAgain)
+                }
             } else {
                 setMessages([...messages, newMessageRecieved])
             }
@@ -105,7 +107,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     content: newMessage,
                     chatId: selectedChat,
                 }, config);
-                console.log(data);
 
                 socket.emit("new message", data)
                 setMessages([...messages, data])
