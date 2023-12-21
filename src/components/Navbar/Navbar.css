@@ -77,14 +77,17 @@
     margin-right: 6px;
 }
 
-.grid, .message, .bell {
+.grid,
+.message,
+.bell {
     color: white;
     padding: 0px 15px;
     margin: 10px 0px;
     font-size: 20px;
 }
 
-.grid, .message {
+.grid,
+.message {
     border-right: 2px solid #2c2e33;
 }
 
@@ -112,22 +115,185 @@
     color: #64698c;
 }
 
+.sidebar {
+    left: 0;
+    position: fixed;
+    background: #191c24;
+    width: 20%;
+    height: 100vh;
+    padding: 20px 10px 20px 0px;
+    z-index: 2;
+}
+
+.sidebar-user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-details {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.avatar-image {
+    object-fit: cover;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin: 0px 15px 0px 15px;
+}
+
+.name-type p {
+    margin: 0;
+    text-align: start;
+}
+
+.name {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.type {
+    font-size: 14px;
+    font-weight: normal;
+    color: #64698c;
+}
+
+.sidebar-options {
+    color: #64698c;
+    padding: 0px 15px;
+}
+
+.navigation-title {
+    color: #64698c;
+    font-size: 20px;
+    margin: 30px 0px 15px 0px;
+    padding-left: 2rem;
+}
+
+ul {
+    padding: 0;
+}
+
+.sidebar ul li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+.menu-icon {
+    font-size: 20px;
+    padding: 10px;
+}
+
+.dashboard {
+    color: #735fe8;
+}
+
+.ui {
+    color: #ffab00;
+}
+
+.form {
+    color: #fc424a;
+}
+
+.tables {
+    color: #0090e7;
+}
+
+.charts {
+    color: #00d25b;
+}
+
+.icons {
+    color: #8f5fe8;
+}
+
+.user-pages {
+    color: #ffab00;
+}
+
+.docs {
+    color: #ff545d;
+}
+
+.menu-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #64698c;
+}
+
+.dash {
+    background: #0f1015;
+    border-radius: 0 50px 50px 0;
+    border-left: 3px solid #0090e7;
+}
+
+.dash-title {
+    color: white;
+}
+
 
 @media screen and (max-width: 1235px) {
     .logo-res p {
         display: flex;
         margin-bottom: 0;
     }
-    .logo, .navbar-button, .button, .seacrh-box, .grid {
+
+    .logo,
+    .navbar-button,
+    .button,
+    .seacrh-box,
+    .grid {
         display: none;
     }
+
     .user-info {
         margin-right: 40px;
     }
+
     .button-res {
         display: flex;
     }
+
     .button-group {
         margin-right: 1.5rem;
+    }
+
+    .sidebar {
+        width: 300px;
+        left: auto;
+        right: 0;
+    }
+}
+
+@media screen and (max-width: 1170px) {
+
+    .menu-title,
+    .menu-icon {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .avatar-name {
+        display: none;
+    }
+
+    .button-group {
+        margin-right: 0.75rem;
+    }
+
+    .user-info {
+        margin-right: 20px;
+    }
+
+    .sidebar {
+        width: 250px;
     }
 }
