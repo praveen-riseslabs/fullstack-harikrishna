@@ -65,49 +65,49 @@ const Navbar = () => {
                         <span className='menu-icon dashboard'>
                             <i className="fa-solid fa-gauge-simple-high"></i>
                         </span>
-                        <span className='menu-title dash-title'>Dashboard</span>
+                        <span className='menu-title dash-title'>Assets</span>
                     </li>
                     <li>
                         <span className='menu-icon ui'>
                             <i className="fa-solid fa-laptop"></i>
                         </span>
-                        <span className='menu-title'>Basic UI Elements</span>
+                        <span className='menu-title'>My Health</span>
                     </li>
                     <li>
                         <span className='menu-icon form'>
                             <i className="fa-solid fa-list-check"></i>
                         </span>
-                        <span className='menu-title'>Form Elements</span>
+                        <span className='menu-title'>Outing or Tours</span>
                     </li>
                     <li>
                         <span className='menu-icon tables'>
                             <i className="fa-solid fa-table"></i>
                         </span>
-                        <span className='menu-title'>Tables</span>
+                        <span className='menu-title'>Debits and Credits</span>
                     </li>
                     <li>
                         <span className='menu-icon charts'>
                             <i className="fa-solid fa-chart-simple"></i>
                         </span>
-                        <span className='menu-title'>Charts</span>
+                        <span className='menu-title'>Passwords</span>
                     </li>
                     <li>
                         <span className='menu-icon icons'>
                             <i className="fa-solid fa-icons"></i>
                         </span>
-                        <span className='menu-title'>Icons</span>
+                        <span className='menu-title'>Daily Activities</span>
                     </li>
                     <li>
                         <span className='menu-icon user-pages'>
                             <i className="fa-solid fa-shield-halved"></i>
                         </span>
-                        <span className='menu-title'>User Pages</span>
+                        <span className='menu-title'>My Social Post</span>
                     </li>
                     <li>
                         <span className='menu-icon docs'>
                             <i className="fa-solid fa-book"></i>
                         </span>
-                        <span className='menu-title'>Documentation</span>
+                        <span className='menu-title'>Troubles and hard time</span>
                     </li>
                 </ul>
             </div>
