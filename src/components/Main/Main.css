@@ -13,7 +13,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 0px 10px;
     margin-bottom: 20px;
 }
@@ -64,7 +64,7 @@ p {
 .card3,
 .card4 {
     flex: 1;
-    margin: 0 10px 20px;
+    margin: 0 10px 10px;
     background: #191b23;
     display: flex;
     align-items: center;
@@ -125,7 +125,6 @@ p {
 }
 
 .third-container {
-    margin-bottom: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -389,14 +388,13 @@ input[type='checkbox'] {
     align-items: stretch;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
 }
 
 .sixth-container-cards {
     background-color: #191b23;
     border-radius: 5px;
     padding: 20px;
-    flex: 1;
+    flex: 1 0 auto;
     margin: 0px 10px;
     margin-bottom: 20px;
     box-sizing: border-box;
@@ -536,6 +534,48 @@ p {
     color: #6c757d;
 }
 
+.seventh-container {
+    margin-bottom: 20px;
+    background-color: #191b23;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.seventh-container-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.seventh-container-table {
+    width: 100%;
+}
+
+.world-map {
+    width: 100%;
+    height: auto;
+    max-height: 300px
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #6c7293;
+}
+
+.footer-right {
+    color: #198754;
+}
+
+
 
 @media screen and (max-width: 1235px) {
     .main {
@@ -546,7 +586,7 @@ p {
     .card2,
     .card3,
     .card4 {
-        flex: 1 1 100%;
+        flex-basis: calc(50% - 20px);
     }
 
     .chart-main-text {
@@ -610,6 +650,19 @@ p {
         padding: 15px;
     }
 
+    .seventh-container-card {
+        flex-direction: column;
+    }
+
+    .seventh-container-table {
+        width: 100%;
+    }
+
+    .world-map {
+        width: 100%;
+        margin-top: 15px;
+    }
+
 }
 
 
@@ -671,6 +724,16 @@ p {
 
     .sixth-container-cards {
         margin: 20px 0px
+    }
+
+    .footer-left {
+        align-items: center;
+    }
+
+    .footer {
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
     }
 
 }

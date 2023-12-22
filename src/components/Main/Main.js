@@ -5,6 +5,7 @@ import Avatar from '../../Assets/Images/Avatar.jpg'
 import Avatar1 from '../../Assets/Images/face1.jpg'
 import Avatar2 from '../../Assets/Images/face2.jpg'
 import Avatar3 from '../../Assets/Images/face3.jpg'
+import Map from '../../Assets/Images/World-Map.png'
 
 const Main = () => {
     return (
@@ -437,6 +438,66 @@ const Main = () => {
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div className="seventh-container">
+                <div className="seventh-container-card">
+                    <div className="seventh-container-card-first">
+                        <table className="table seventh-container-table">
+                            <tbody>
+                                <tr>
+                                    <th><i className="fa-solid fa-flag"></i></th>
+                                    <td>USA</td>
+                                    <td>1500</td>
+                                    <td>56.35%</td>
+                                </tr>
+                                <tr>
+                                    <th><i className="fa-solid fa-flag"></i></th>
+                                    <td>Germany</td>
+                                    <td>800</td>
+                                    <td>33.25%</td>
+                                </tr>
+                                <tr>
+                                    <th><i className="fa-solid fa-flag"></i></th>
+                                    <td>Australia</td>
+                                    <td>760</td>
+                                    <td>15.45%</td>
+                                </tr>
+                                <tr>
+                                    <th><i className="fa-solid fa-flag"></i></th>
+                                    <td>United Kingdom</td>
+                                    <td>450</td>
+                                    <td>25.00%</td>
+                                </tr>
+                                <tr>
+                                    <th><i className="fa-solid fa-flag"></i></th>
+                                    <td>Romania</td>
+                                    <td>620</td>
+                                    <td>10.25%</td>
+                                </tr>
+                                <tr>
+                                    <th><i className="fa-solid fa-flag"></i></th>
+                                    <td>Brazil</td>
+                                    <td>230</td>
+                                    <td>75.00%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="seventh-container-card-second">
+                        <img className='world-map' src={Map} alt='' />
+                    </div>
+                </div>
+            </div>
+
+            <div className="footer">
+                <div className="footer-left">
+                    <span>Footer text left up</span>
+                    <span>Footer text left down</span>
+                </div>
+                <div className="footer-right">
+                    <span>Footer text Right</span>
                 </div>
             </div>
 
