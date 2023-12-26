@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const User = require('./models/User')
+const Form = require('./models/Form')
 
 
 const JWT_SECRET = 'SecretStr!ng'
@@ -81,6 +82,22 @@ app.post('/login', [
     }
 });
 
+app.post('/form-upload', async (req, res) => {
+    const { token } = req.body;
+    try {
+        const user = jwt.verify(token, JWT_SECRET)
+        const email = user.email;
+
+        const form = await Form.create({
+            email: email,
+            title: req.body.title,
+            description: req.body.description
+        })
+        res.send(form)
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 
 

@@ -1,20 +1,47 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar/Navbar'
 import './Dashboard.css'
 import Test from '../../Assets/Images/Test.png'
+import axios from 'axios'
 
 const Dashboard = () => {
+
+    const [title, setTitle] = useState()
+    const [description, setDescription] = useState()
+    const [token, setToken] = useState("")
+
+    useEffect(() => {
+        const userToken = localStorage.getItem('token');
+        setToken(userToken);
+      }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            const response = await axios.post('http://localhost:5000/form-upload', { token, title, description });
+            const { data } = response;
+            if (data) {
+                alert("Success!")
+                setTitle('')
+                setDescription('')
+            }
+        } catch (error) {
+            alert("Error!")
+            console.log(error)
+        }
+    }
+
     return (
         <div>
             <Navbar />
             <div className="main-contents">
                 <div className="form-container">
                     <h2 className='form-heading'>Add Data</h2>
-                    <form className='main-form' action="">
+                    <form className='main-form' onSubmit={handleSubmit}>
                         <span className='form-labels'>Title</span>
-                        <input className='form-input' type="text" name="title" id="title" />
+                        <input className='form-input' type="text" name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
                         <span className='form-labels'>Description</span>
-                        <textarea className='form-input' type="text" name="description" id="description" rows='5' style={{ resize: "none" }} />
+                        <textarea className='form-input' type="text" name="description" id="description" rows='5' style={{ resize: "none" }} value={description} onChange={(e) => setDescription(e.target.value)} />
                         <span className='form-labels'>Upload Image</span>
                         <input className='form-input' type="file" name="image" id="image" />
                         <button className='form-btn'>Submit</button>
