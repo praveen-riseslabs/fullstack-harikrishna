@@ -61,11 +61,11 @@ const Navbar = () => {
                 <h3 className='navigation-title'>Navigation</h3>
 
                 <ul>
-                    <li className='dash'>
+                    <li>
                         <span className='menu-icon dashboard'>
                             <i className="fa-solid fa-gauge-simple-high"></i>
                         </span>
-                        <span className='menu-title dash-title'>Assets</span>
+                        <span className='menu-title'>Assets</span>
                     </li>
                     <li>
                         <span className='menu-icon ui'>
@@ -73,11 +73,11 @@ const Navbar = () => {
                         </span>
                         <span className='menu-title'>My Health</span>
                     </li>
-                    <li>
+                    <li className='OutingTours'>
                         <span className='menu-icon form'>
                             <i className="fa-solid fa-list-check"></i>
                         </span>
-                        <span className='menu-title'>Outing or Tours</span>
+                        <span className='menu-title OutingTours-title'>Outing or Tours</span>
                     </li>
                     <li>
                         <span className='menu-icon tables'>

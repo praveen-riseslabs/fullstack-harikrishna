@@ -99,6 +99,24 @@ app.post('/form-upload', async (req, res) => {
     }
 });
 
+app.post('/form-data', (req, res) => {
+    const { token } = req.body;
+    try {
+        const user = jwt.verify(token, JWT_SECRET)
+        const email = user.email;
+        Form.find({ email })
+            .then((data) => {
+                // console.log(data);
+                res.send(data)
+            })
+            .catch((error) => {
+                res.send({ status: "Error", data: error })
+            })
+    } catch (error) {
+        console.log(error)
+    }
+});
+
 
 
 

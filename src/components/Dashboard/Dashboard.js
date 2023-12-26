@@ -9,11 +9,28 @@ const Dashboard = () => {
     const [title, setTitle] = useState()
     const [description, setDescription] = useState()
     const [token, setToken] = useState("")
+    const [userData, setUserData] = useState([])
 
     useEffect(() => {
         const userToken = localStorage.getItem('token');
         setToken(userToken);
-      }, []);
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.post('http://localhost:5000/form-data', {
+                    token: localStorage.getItem('token'),
+                });
+                const data = await response.data;
+                // console.log(data);
+                setUserData(data)
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -72,16 +89,18 @@ const Dashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Munnar Trip</td>
-                                <td className='table-description'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</td>
-                                <td><img className='table-image' src={Test} alt='' /></td>
-                                <td className='options'>
-                                    <i className="fa-solid fa-pen-to-square edit"></i>
-                                    <i className="fa-solid fa-trash delete"></i>
-                                </td>
-                            </tr>
+                            {userData.map((userdata, id) => (
+                                <tr key={id}>
+                                    <td>{id + 1}</td>
+                                    <td className='table-title'>{userdata.title}</td>
+                                    <td className='table-description'>{userdata.description}</td>
+                                    <td><img className='table-image' src={Test} alt='' /></td>
+                                    <td className='options'>
+                                        <i className="fa-solid fa-pen-to-square edit"></i>
+                                        <i className="fa-solid fa-trash delete"></i>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
