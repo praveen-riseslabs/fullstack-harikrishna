@@ -7,6 +7,8 @@ var jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const User = require('./models/User')
 const Form = require('./models/Form')
+const multer = require('multer')
+const path = require('path')
 
 
 const JWT_SECRET = 'SecretStr!ng'
@@ -15,6 +17,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 app.use(bodyParser.json());
+app.use(express.static('Images'))
 
 
 const PORT = 5000
@@ -82,7 +85,19 @@ app.post('/login', [
     }
 });
 
-app.post('/form-upload', async (req, res) => {
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'Images/')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname))
+    }
+})
+const upload = multer({ storage: storage })
+
+app.post('/form-upload', upload.single('image'), async (req, res) => {
     const { token } = req.body;
     try {
         const user = jwt.verify(token, JWT_SECRET)
@@ -91,13 +106,16 @@ app.post('/form-upload', async (req, res) => {
         const form = await Form.create({
             email: email,
             title: req.body.title,
-            description: req.body.description
+            description: req.body.description,
+            image: req.file.filename
         })
         res.send(form)
     } catch (error) {
         console.log(error);
     }
 });
+
+
 
 app.post('/form-data', (req, res) => {
     const { token } = req.body;
