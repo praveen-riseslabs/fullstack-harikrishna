@@ -18,8 +18,6 @@ const Dashboard = () => {
     useEffect(() => {
         const userToken = localStorage.getItem('token');
         setToken(userToken);
-        fetchData();
-        // eslint-disable-next-line
     }, []);
 
     const handleSubmit = async (e) => {
@@ -46,22 +44,33 @@ const Dashboard = () => {
         }
     }
 
-    
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/form-data', {
-                    params: {
-                        token: localStorage.getItem('token'),
-                        startDate: startDate,
-                        endDate: endDate
-                    },
-                });
-                const data = await response.data;
-                setUserData(data);
-            } catch (error) {
-                console.error(error);
-            }
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/form-data', {
+                params: {
+                    token: localStorage.getItem('token'),
+                    startDate: startDate,
+                    endDate: endDate
+                },
+            });
+            const data = await response.data;
+            setUserData(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+        const intervalId = setInterval(() => {
+            fetchData();
+        }, 1000);
+        return () => {
+            clearInterval(intervalId);
         };
+        // eslint-disable-next-line
+    }, [startDate, endDate]);
 
 
     return (
