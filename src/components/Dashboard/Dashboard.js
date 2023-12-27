@@ -12,13 +12,16 @@ const Dashboard = () => {
     const [image, setImage] = useState()
     const [search, setSearch] = useState('');
     const [date, setDate] = useState();
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
 
     useEffect(() => {
         const userToken = localStorage.getItem('token');
         setToken(userToken);
+        fetchData();
+        // eslint-disable-next-line
     }, []);
 
-    // eslint-disable-next-line
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -43,21 +46,22 @@ const Dashboard = () => {
         }
     }
 
-    useEffect(() => {
+    
         const fetchData = async () => {
             try {
-                const response = await axios.post('http://localhost:5000/form-data', {
-                    token: localStorage.getItem('token'),
+                const response = await axios.get('http://localhost:5000/form-data', {
+                    params: {
+                        token: localStorage.getItem('token'),
+                        startDate: startDate,
+                        endDate: endDate
+                    },
                 });
                 const data = await response.data;
-                console.log(data);
-                setUserData(data)
+                setUserData(data);
             } catch (error) {
                 console.error(error);
             }
         };
-        fetchData();
-    }, []);
 
 
     return (
@@ -85,10 +89,13 @@ const Dashboard = () => {
                     <h2 className='main-table-heading'>Your Data</h2>
                     <div className="filters">
                         <input className='filter-search' type="text" placeholder='Search By Title...' onChange={(e) => { setSearch(e.target.value) }} />
-                        <form className="date-form" action="">
-                            <input className='date' type="date" name="" id="" />
-                            <input className='date' type="date" name="" id="" />
-                            <button className='date-form-btn'>Submit</button>
+                        <form className="date-form" onSubmit={(e) => {
+                            e.preventDefault();
+                            fetchData();
+                        }}>
+                            <input className='date' type="date" name="startDate" id="startDate" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                            <input className='date' type="date" name="endDate" id="endDate" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                            <button className='date-form-btn' type="submit">Submit</button>
                         </form>
                     </div>
 

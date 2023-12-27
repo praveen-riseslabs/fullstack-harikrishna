@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const User = require('./models/User')
 const Form = require('./models/Form')
 const multer = require('multer')
-const path = require('path')
+const path = require('path');
 
 
 const JWT_SECRET = 'SecretStr!ng'
@@ -118,21 +118,27 @@ app.post('/form-upload', upload.single('image'), async (req, res) => {
 
 
 
-app.post('/form-data', (req, res) => {
-    const { token } = req.body;
+app.get('/form-data', (req, res) => {
+    const { token, startDate, endDate } = req.query;
     try {
-        const user = jwt.verify(token, JWT_SECRET)
+        const user = jwt.verify(token, JWT_SECRET);
         const email = user.email;
-        Form.find({ email })
+
+        let query = { email };
+
+        if (startDate && endDate) {
+            query.date = { $gte: new Date(startDate), $lte: new Date(endDate) };
+        }
+
+        Form.find(query)
             .then((data) => {
-                // console.log(data);
-                res.send(data)
+                res.send(data);
             })
             .catch((error) => {
-                res.send({ status: "Error", data: error })
-            })
+                res.send({ status: "Error", data: error });
+            });
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 });
 
