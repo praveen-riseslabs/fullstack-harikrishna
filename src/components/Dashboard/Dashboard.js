@@ -11,6 +11,7 @@ const Dashboard = () => {
     const [userData, setUserData] = useState([])
     const [image, setImage] = useState()
     const [search, setSearch] = useState('');
+    const [date, setDate] = useState();
 
     useEffect(() => {
         const userToken = localStorage.getItem('token');
@@ -26,6 +27,7 @@ const Dashboard = () => {
         formData.append('title', title);
         formData.append('description', description);
         formData.append('image', image);
+        formData.append('date', date);
 
         try {
             const response = await axios.post('http://localhost:5000/form-upload', formData);
@@ -55,7 +57,7 @@ const Dashboard = () => {
             }
         };
         fetchData();
-    }, [handleSubmit]);
+    }, []);
 
 
     return (
@@ -67,6 +69,8 @@ const Dashboard = () => {
                     <form className='main-form' onSubmit={handleSubmit}>
                         <span className='form-labels'>Title</span>
                         <input className='form-input' type="text" name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                        <span className='form-labels'>Date</span>
+                        <input className='form-input' type="date" name="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} />
                         <span className='form-labels'>Description</span>
                         <textarea className='form-input' type="text" name="description" id="description" rows='5' style={{ resize: "none" }} value={description} onChange={(e) => setDescription(e.target.value)} />
                         <span className='form-labels'>Upload Image</span>
@@ -95,7 +99,7 @@ const Dashboard = () => {
                                 <th scope="col">Title</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Image</th>
-                                <th scope="col">Options</th>
+                                <th scope="col">Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -107,10 +111,7 @@ const Dashboard = () => {
                                     <td className='table-title'>{userdata.title}</td>
                                     <td className='table-description'>{userdata.description}</td>
                                     <td><img className='table-image' src={`http://localhost:5000/` + userdata.image} alt='' /></td>
-                                    <td className='options'>
-                                        <i className="fa-solid fa-pen-to-square edit"></i>
-                                        <i className="fa-solid fa-trash delete"></i>
-                                    </td>
+                                    <td>{new Date(userdata.date).toLocaleDateString()}</td>
                                 </tr>
                             ))}
                         </tbody>

@@ -15,6 +15,10 @@ const FormSchema = new mongoose.Schema({
     },
     image: {
         type: String
+    },
+    date: {
+        type: Date,
+        required: true
     }
 });
 

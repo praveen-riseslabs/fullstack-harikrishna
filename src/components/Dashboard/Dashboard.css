@@ -165,27 +165,13 @@
     width: 500px !important;
 }
 
-.options {
-    font-size: 1.25rem;
+.form-input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
 }
 
-.options i {
-    margin: 0px 10px;
+.form-input[type="date"] {
     color: #6c7293;
-    transition: 0.2s ease-in;
 }
-
-.edit:hover {
-    color: #22bb33;
-}
-
-.delete:hover {
-    color: #bb2124;
-}
-
-
-
-
 
 
 @media screen and (max-width: 1235px) {

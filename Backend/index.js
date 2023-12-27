@@ -107,7 +107,8 @@ app.post('/form-upload', upload.single('image'), async (req, res) => {
             email: email,
             title: req.body.title,
             description: req.body.description,
-            image: req.file.filename
+            image: req.file.filename,
+            date: req.body.date
         })
         res.send(form)
     } catch (error) {
